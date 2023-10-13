@@ -1,0 +1,259 @@
+
+*{
+    margin: 0;
+    padding: 0;
+
+}
+body{
+    min-height: 100vh;
+    background-color: #051920;
+}
+main{
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    overflow: hidden;
+}
+.accordion{
+    background-color: #f8f9fa;
+}
+.btn_accordion{
+    width: 100%;
+    padding: 0.8rem;
+    text-align: center;
+    border:none;
+    cursor: pointer;
+}
+.btn_accordion.active{
+    background-color: #ddd;
+}
+.content_accordion {
+    height: 0;
+    transition: all 1s;
+}
+.content_accordion p{
+    padding: 1rem;
+}
+
+.p-2 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.p-2 p {
+    margin: 0;
+
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.accordion-item {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.accordion-body {
+    padding: 10px;
+}
+
+.titulo h1 {
+    padding-top: 40px;
+    text-align: center;
+    font-size: 45px;
+}
+
+.accordion {
+    margin-bottom: 50px;
+    margin: 50px;
+} 
+
+.accordion p {
+    margin-left: 20px;
+    font-weight: bold;
+    font-size: 30px;
+}
+.accordion img {
+    width: 150px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin: 30px;
+    font-size: 18px;
+    font-weight: 450;
+}
+
+.btn-enviar {
+    display: grid;
+    grid-template-rows: 0% 0% 10% ;
+    grid-template-columns: 50% 20% 10% ;
+}
+
+.btn {
+    grid-row: 5/5;
+    grid-column: 5/5;
+}
+
+.p-2 {
+    border: solid 1.5px black;
+    width: 80px; 
+    height: 80px;
+    transition: 0.3s;
+}
+
+.p-2:hover{
+    transform: scale3d(1.1, 1.1, 1);
+}
+
+.status {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    flex-direction: row;
+    align-items: start;
+    width: 100%;
+    border: solid 1.5px grey;
+    border-radius: 10px;
+    gap: 5px;
+    padding-left: 20px;
+    margin-top: 20px;
+}
+
+.status>.p-status p {
+    text-align: center;
+    margin: 0px;
+    color: black;
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 3px;
+}
+
+.disponivel {
+    background-color: green;
+    width: 25px;
+    height: 25px;
+    margin: 5px;
+    border: solid 1.5px black;
+}
+
+.manutencao {
+    background-color: yellow;
+    width: 25px;
+    height: 25px;
+    margin: 5px;
+    border: solid 1.5px black;
+}
+
+.indisponivel {
+    background-color: red;
+    width: 25px;
+    height: 25px;
+    margin: 5px;
+    border: solid 1.5px black;
+}
+
+.accordion-header .quantidade-pc {
+    display: flex;
+    flex-direction: row;
+}
+
+@media screen and (max-width: 1026px) {
+
+    .titulo h1 {
+        padding-top: 40px;
+        text-align: center;
+        font-size: 45px;
+    }
+    
+    .accordion {
+        margin-bottom: 50px;
+        margin: 50px;
+    }
+
+    .accordion p {
+        margin-left: 20px;
+        font-weight: bold;
+        font-size: 20px;
+    }
+
+    .accordion img {
+        width: 80px;
+    }
+
+    .status {
+        display: grid;
+        grid-template-columns: 15% 30%;
+        grid-template-rows: 30% 30% 30%;
+        width: 80%;
+        border: solid 1.5px grey;
+        border-radius: 10px;
+        gap: 5px;
+        padding-left: 20px;
+        margin-top: 20px;
+        margin-left: 35px;
+    }
+
+    .status>.p-status p {
+        text-align: center;
+        margin: 0px;
+        color: black;
+        font-size: 18px;
+        font-weight: 500;
+        margin-top: 3px;
+    }
+
+    .disponivel {
+        background-color: green;
+        width: 25px;
+        height: 25px;
+        margin: 5px;
+        border: solid 1.5px black;
+    }
+
+    .manutencao {
+        background-color: yellow;
+        width: 25px;
+        height: 25px;
+        margin: 5px;
+        border: solid 1.5px black;
+    }
+
+    .indisponivel {
+        background-color: red;
+        width: 25px;
+        height: 25px;
+        margin: 5px;
+        border: solid 1.5px black;
+    }
+
+    .qauntidade {
+        display: none;
+    }
+
+}
+
+.laboratorios .row {
+    border: 1px solid black;
+    margin: 40px;
+    border-radius: 5px;
+}
+
+.col-lg-1 {
+    padding: 20px;
+    display: flex;
+    justify-content: space-around;
+}
+
+.linha {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+

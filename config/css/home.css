@@ -1,0 +1,19 @@
+.bem-vindos {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    background-color: rgb(70, 94, 153);
+    box-shadow: 0px 3px 10px #464646;
+    padding: 40px;
+}
+
+#card-nav {
+    margin: 50px 10px 10px 10px;
+}
+
+#card-nav .btn{
+    background-color: #FE8A00 !important;
+    border-color: #FE8A00;
+}

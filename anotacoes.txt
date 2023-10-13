@@ -1,0 +1,5 @@
+// controlerr -> todas as classes que vao fazer a comunicacao entre models e views
+
+// models -> pasta onde vai ter todas as classes que vao se comunicar diretamente com o bancos de dados
+
+// views -> e onde vai ficar todas as paginas do site ou sistema que vao ser visivel para o usuario

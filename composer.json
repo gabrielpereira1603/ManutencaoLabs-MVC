@@ -1,0 +1,25 @@
+{
+    "name": "pereira/projeto-tcc",
+    "description": "Projeto TCC, Sistema de gerenciamento de manutencoes de computadores!",
+    "license": "propietary",
+    "authors": [
+        {
+            "name": "gabrielpereira1603",
+            "email": "gabriel_ap02@yahoo.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {
+        "php":">=7.2",
+        "phpmailer/phpmailer": "^6.8" 
+    },
+    "autoload": {
+        "psr-4": {
+            "app\\": "app/",
+            "core\\": "core/"
+        },
+        "files": [
+            "config/config.php" 
+        ]
+    }
+}
