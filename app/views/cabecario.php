@@ -53,15 +53,37 @@
                             <li class="nav-item"><a class="nav-link" href="criar-laboratorio.php">Manutenção De Laboratórios</a></li>
                             <i class="bi bi-person-circle"></i>
                             <li class="nav-item">
-                                <form method="post" action="?router=UsuarioController/logout">
-                                    <button type="submit" class="btn btn-link nav-link" onclick="return confirm('Deseja sair?')">Sair</button>
-                                </form>
+                            <form method="post" action="?router=UsuarioController/logout">
+                                <button type="submit" class="btn btn-link nav-link sair-button">Sair</button>
+                            </form>
                             </li>
                         </ul>
                     <?php endif; ?>
                 <?php endif; ?>
             </div>
         </div>
-        
     </nav>
 </header>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+    document.querySelector(".sair-button").addEventListener("click", function(event) {
+        event.preventDefault();
+        Swal.fire({
+            title: 'Deseja sair?',
+            text: "Você não poderá reverter esta ação!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, sair!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // O usuário confirmou, envie o formulário de logout
+                document.querySelector("form").submit();
+            }
+        });
+    });
+});
+
+</script>

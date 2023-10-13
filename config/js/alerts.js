@@ -76,3 +76,4 @@ document.addEventListener('DOMContentLoaded', function () {
     promptForEmail(); // Chama a função para solicitar o email
   });
 });
+

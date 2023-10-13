@@ -2,7 +2,9 @@
 
 namespace app\controllers;
 
-class Site
+use app\models\LaboratorioModel;
+
+class Site extends  LaboratorioModel
 {
     public function home() 
     {
@@ -38,6 +40,8 @@ class Site
         }
         
         $_SESSION['sucesso_admin'] = 'Bem Vindo!';
+
+        $buscarLab = $this->buscarLaboratorio();
         // O usuário está autenticado como administrador, permita o acesso à página menuAdm
         require_once __DIR__ . '/../views/menuAdm.php';
     }
