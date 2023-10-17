@@ -25,6 +25,10 @@
         <?php unset($_SESSION['error_admin']); ?>
         <?php endif; ?>
 
+        <?php
+            var_dump($_SESSION)
+        ?>
+
         <section class="container">
             <div id="form-container">
                 <form class="formulario" action="?router=UsuarioController/login" method="POST" id="form">

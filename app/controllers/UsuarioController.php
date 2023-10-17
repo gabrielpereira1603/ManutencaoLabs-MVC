@@ -17,9 +17,8 @@ class UsuarioController
         $autenticado = $usuarioModel->autenticarAdmin($login, $senha);
         
 
-        if ($autenticado && $_SESSION['codnivel_acesso'] == 3) {
-            $_SESSION['autenticado_admin'] = true;
-            header("Location:?router=Site/menuAdm");
+        if ($autenticado) {
+            header("Location:?router=Site/menu");
         } else {
             // Defina a mensagem de erro
             $_SESSION['error_admin'] = 'Dados inválidos';
@@ -54,9 +53,35 @@ class UsuarioController
             echo json_encode($response);
         }
     }
+
+
     
+    public function CriarNovoUsuario() {
+        session_start();
     
+        $login = $_POST['login'];
+        $senha = $_POST['senha'];
+        $email = $_POST['email'];
+        $nome = $_POST['nome'];
+        $nivelAcessoSelecionado = $_POST['nivel_acesso'];
     
+        $usuarioModel = new UsuarioModel();
+    
+        try {
+            if ($usuarioModel->CriarNovoUsuario($login, $senha, $nome, $email, $nivelAcessoSelecionado)) {
+                // Usuário criado com sucesso, redirecione com a mensagem de sucesso
+                $_SESSION['success_message'] = 'Usuário criado com sucesso.';
+            } else {
+                // Trate o caso em que a criação do usuário falhou
+                $_SESSION['error_message'] = 'Houve um erro ao criar o usuário.';
+            }
+            header("Location:?router=Site/addUsuario");
+        } catch (\Exception $e) {
+            // Se ocorrer um erro
+            $_SESSION['error_message'] = 'Houve um erro ao criar o usuário.';
+        }
+    }
+
     public function logout()
     {
         session_start();

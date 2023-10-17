@@ -17,7 +17,7 @@ class UsuarioModel extends Connection
         $conn = $this->connect();
 
         try {
-            $stmt = $conn->prepare('SELECT senha, nome_usuario, nivel_acesso_fk FROM usuario WHERE login = :login');
+            $stmt = $conn->prepare('SELECT codusuario, senha, nome_usuario, nivel_acesso_fk FROM usuario WHERE login = :login');
 
             if ($stmt === false) {
                 throw new \Exception('Houve um erro na preparação da consulta SQL');
@@ -32,6 +32,7 @@ class UsuarioModel extends Connection
                     // Armazene o codnivel_acesso em uma variável de sessão
                     $_SESSION['autenticado_admin'] = true;
                     $_SESSION['nomeadmin'] = $usuario['nome_usuario'];
+                    $_SESSION['codusuario'] = $usuario['codusuario'];
                     $_SESSION['codnivel_acesso'] = $usuario['nivel_acesso_fk'];
                     return true;
                 }
@@ -114,7 +115,125 @@ class UsuarioModel extends Connection
     
         return true; // Email enviado com sucesso
     }
+
+    public function CriarNovoUsuario($login, $senha, $nome, $email, $nivelAcessoSelecionado)
+    {
+        // Verifique se os campos estão preenchidos
+        if (empty($login) || empty($senha) || empty($nome) || empty($email)) {
+            $_SESSION['error_message'] = 'Todos os campos devem ser preenchidos.';
+            return false;
+        }
     
+        $conn = $this->connect(); // Use a conexão da classe Connection
+    
+        // Consulta o banco de dados para garantir que o login, nome e email não existam
+        $stmt = $conn->prepare('SELECT * FROM usuario WHERE login = :login OR nome_usuario = :nome OR email_usuario = :email');
+        $stmt->execute(['login' => $login, 'nome' => $nome, 'email' => $email]);
+    
+        if ($stmt->rowCount() > 0) {
+            $_SESSION['error_message'] = 'O nome de usuário ou login já existe.';
+            return false;
+        }
+    
+        // Gere o hash da senha
+        $hashed_password = password_hash($senha, PASSWORD_DEFAULT);
+    
+        if ($hashed_password === false) {
+            $_SESSION['error_message'] = 'Falha ao criar hash da senha';
+            return false;
+        }
+    
+        // Execute a inserção dos dados no banco de dados
+        $stmt = $conn->prepare('INSERT INTO usuario (login, senha, nome_usuario, email_usuario, nivel_acesso_fk) VALUES (:login, :senha, :nome, :email, :nivelAcesso)');
+        $result = $stmt->execute([
+            ':login' => $login,
+            ':senha' => $hashed_password,
+            ':nome' => $nome,
+            ':email' => $email,
+            ':nivelAcesso' => $nivelAcessoSelecionado,
+        ]);
+    
+        if ($result === false) {
+            $_SESSION['error_message'] = 'Houve um erro ao registrar o usuário.';
+            return false;
+        }
+    
+        $_SESSION['success_message'] = 'Usuário criado com sucesso';
 
+        // // Lógica para enviar o email usando as configurações de SMTP
+        // $mail = new PHPMailer;
 
+        // $mail->isSMTP();
+        // $mail->Host       = 'smtp.gmail.com';  
+        // $mail->SMTPAuth   = true;                                  
+        // $mail->Username   = 'gabrielpereira16032002@gmail.com';  // Seu e-mail do Gmail
+        // $mail->Password   = 'muvqlnslnpoadruk'; // Sua senha de aplicativo gerada
+        // $mail->SMTPSecure = 'tls';         
+        // $mail->Port       = 587;
+    
+        // $mail->setFrom('gabrielpereira16032002@gmail.com', 'Sistema de Manutenção Unifunec'); // Seu e-mail e nome
+        // $mail->addAddress($email, $nome); // Email do destinatário e nome
+
+        // $mail->IsHTML(true);
+        // $mail->CharSet = 'UTF-8';
+        // $mail->Subject = 'Bem-vindo ao Sistema de Manutenção Unifunec';
+        // $mail->Body = '
+        // <html>
+        //     <head>
+        //         <style>
+        //             div {
+        //                 text-align: center;
+        //                 color: #333333;
+        //                 font-family: Arial, sans-serif;
+        //             }
+        //             img {
+        //                 width: 200px;
+        //             }
+        //             h1 {
+        //                 color: #004085;
+        //             }
+        //             p {
+        //                 color: #6c757d;
+        //             }
+        //             a {
+        //                 background-color: #007bff;
+        //                 color: #ffffff;
+        //                 padding: 10px 20px;
+        //                 text-decoration: none;
+        //                 border-radius: 5px;
+        //                 margin-top: 20px;
+        //             }
+        //             small {
+        //                 color: #6c757d;
+        //             }
+        //         </style>
+        //     </head>
+        //     <body>
+        //         <div>
+        //             <img src="https://i.imgur.com/1WR1Xsi.png" alt="Logo da Empresa">
+        //             <h1>Bem-vindo ao Sistema de Solicitação de Troca de Senha Unifunec</h1>
+        //             <p>Seu login é: ' . $login . '</p>
+        //             <p>Olá, seja bem-vindo ao nosso sistema. Agradecemos por se juntar a nós. Estamos felizes em tê-lo como nosso usuário.</p>
+        //             <p>Se você tiver alguma dúvida ou precisar de assistência, não hesite em entrar em contato conosco.</p>
+        //             <hr>
+        //             <small>Unifunec - Centro Universitário de Santa Fé do Sul<br>Avenida Conselheiro Antônio Prado, 1400 - Jardim das Palmeiras, Santa Fé do Sul - SP, 15775-000<br>Contato: (17) 3641-9000</small>
+        //         </div>
+        //     </body>
+        // </html>';
+        // $mail->AltBody = 'Bem-vindo ao Sistema de Solicitação de Troca de Senha Unifunec' . PHP_EOL . 
+        //     'Seu login é: ' . $login . PHP_EOL .
+        //     'Olá, seja bem-vindo ao nosso sistema. Agradecemos por se juntar a nós. Estamos felizes em tê-lo como nosso usuário.' . PHP_EOL .
+        //     'Se você tiver alguma dúvida ou precisar de assistência, não hesite em entrar em contato conosco.' . PHP_EOL .
+        //     'Unifunec - Centro Universitário de Santa Fé do Sul - Avenida Conselheiro Antônio Prado, 1400 - Jardim das Palmeiras, Santa Fé do Sul - SP, 15775-000 - Contato: (17) 3641-9000';
+
+        // if (!$mail->send()) {
+        //     // Erro ao enviar o e-mail
+        //     error_log("Erro ao enviar o email: " . $mail->ErrorInfo);
+        //     return false;
+        // }
+    
+        // return true;
+    }
+
+    
 }
