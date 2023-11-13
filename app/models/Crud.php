@@ -37,7 +37,8 @@ class Crud extends Connection
 
     }
 
-    public function buscarLaboratorio() {
+    public function buscarLaboratorio()
+    {
         $conn = $this->connect();
         $sql = "SELECT * FROM laboratorio";
     
@@ -64,7 +65,8 @@ class Crud extends Connection
         return $laboratorios;
     }
 
-    public function getNiveisAcesso() {
+    public function getNiveisAcesso()
+    {
         $conn = $this->connect();
     
         try {
@@ -82,7 +84,8 @@ class Crud extends Connection
         }
     }
 
-    public function getComponentes() {
+    public function getComponentes()
+    {
         $conn = $this->connect();
 
         try {
@@ -100,7 +103,72 @@ class Crud extends Connection
         }
     }
 
-
+    public function getDetalhesReclamacao($codcomputador, $codLaboratorio) 
+    {
+        $conn = $this->connect();
+        $sql = "SELECT
+        ua.login AS login,
+        ua.nome_usuario,
+        r.codreclamacao AS codreclamacao,
+        c.codcomputador AS codcomputador,
+        c.patrimonio AS patrimonio,
+        l.numerolaboratorio AS numerolaboratorio,
+        r.datahora_reclamacao AS datahora_reclamacao,
+        r.descricao AS descricao_reclamacao,
+        s.tiposituacao AS situacao,
+        GROUP_CONCAT(co.nome_componente) AS componentes
+        FROM reclamacao r
+        INNER JOIN usuario ua ON r.codusuario_fk = ua.codusuario
+        INNER JOIN computador c ON r.codcomputador_fk = c.codcomputador
+        INNER JOIN laboratorio l ON r.codlaboratorio_fk = l.codlaboratorio
+        INNER JOIN situacao s ON c.codsituacao_fk = s.codsituacao
+        LEFT JOIN reclamacao_componente rc ON r.codreclamacao = rc.codreclamacao_fk
+        LEFT JOIN componente co ON rc.codcomponente_fk = co.codcomponente
+        WHERE c.codcomputador = '$codcomputador' AND l.codlaboratorio = '$codLaboratorio' AND r.status = 'aberta'
+        GROUP BY r.codreclamacao;";
     
+        $stmt = $conn->prepare($sql);
+        $stmt->execute();
+    
+        $reclamacoes = $stmt->fetchAll();
+        return $reclamacoes;
+    }
+
+    public function getUsuarios() 
+    {
+        $conn = $this->connect();
+
+        try {
+            $stmt = $conn->prepare('SELECT * FROM usuario WHERE nivel_acesso_fk > 1');
+            if ($stmt === false) {
+                throw new \Exception('Houve um erro na preparação da consulta SQL');
+            }
+            $stmt->execute();
+            $componentes = $stmt->fetchAll();
+            return $componentes;
+        } catch (\PDOException $e) {
+            die("Erro de conexão: " . $e->getMessage());
+        } catch (\Exception $e) {
+            die($e->getMessage());
+        }
+    }  
+
+    public function getAllUsers() {
+        $conn = $this->connect();
+
+        try {
+            $stmt = $conn->prepare('SELECT * FROM usuario');
+            if ($stmt === false) {
+                throw new \Exception('Houve um erro na preparação da consulta SQL');
+            }
+            $stmt->execute();
+            $componentes = $stmt->fetchAll();
+            return $componentes;
+        } catch (\PDOException $e) {
+            die("Erro de conexão: " . $e->getMessage());
+        } catch (\Exception $e) {
+            die($e->getMessage());
+        }
+    }
     
 }

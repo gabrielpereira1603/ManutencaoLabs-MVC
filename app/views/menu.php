@@ -3,16 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu - ADM</title>
+    <title>Central De Manutenções</title>
+    <link rel="shortcut icon" href="config/images/logo-five_icon.png" type="image/x-icon">
     <link rel="stylesheet" href="config/css/menuAdm.css">
     <link rel="stylesheet" href="config/css/cabecario.css">
     <link rel="stylesheet" href="config/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="config/node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="config/js/alerts.js"></script>
 </head>
     <body>
         <?php
             include("cabecario.php");
             var_dump($_SESSION);
         ?>
+
+        <?php if (isset($_SESSION['error_message'])): ?>
+            <script>
+                showErrorAlert('<?php echo $_SESSION['error_message']; ?>');
+            </script>
+            <?php unset($_SESSION['error_message']); ?>
+        <?php endif; ?>
+
+        <?php if (isset($_SESSION['success_message'])): ?>
+            <script>
+                showSucessoAlert('<?php echo $_SESSION['success_message']; ?>');
+            </script>
+            <?php unset($_SESSION['success_message']); ?>
+        <?php endif; ?>
 
         <div class="titulo">
             <h1>Central de Manutenção</h1>
@@ -77,11 +95,20 @@
                                                 <input type="hidden" name="patrimonio" value="<?php echo $pc['patrimonio']; ?>">
                                                 <input type="hidden" name="codcomputador" value="<?php echo $pc['codcomputador']; ?>">
                                                 <input type="hidden" name="numerolaboratorio" value="<?php echo $pc['numerolaboratorio']; ?>">
-                                                <button type="submit" class="computador-button">
-                                                    <div id="pcs" style='display: flex; align-items: center; justify-content: center; text-align: center; color: black; font-weight: 600; font-size: 24px; width: 80px; height: 80px; <?php echo $cor . ' ' . $styles; ?>'>
-                                                        <p id="pcs-p"><?php echo $pc['patrimonio']; ?></p>
-                                                    </div>
-                                                </button>
+                                                
+                                                <?php if ($pc['codsituacao_fk'] > 1 && $_SESSION['codnivel_acesso'] <= 1): ?>
+                                                    <button type="button" class="computador-button">
+                                                        <div id="pcs" style='display: flex; align-items: center; justify-content: center; text-align: center; color: black; font-weight: 600; font-size: 24px; width: 80px; height: 80px; <?php echo $cor . ' ' . $styles; ?>'>
+                                                            <p id="pcs-p"><?php echo $pc['patrimonio']; ?></p>
+                                                        </div>
+                                                    </button>
+                                                <?php else: ?>
+                                                    <button type="submit" class="computador-button">
+                                                        <div id="pcs" style='display: flex; align-items: center; justify-content: center; text-align: center; color: black; font-weight: 600; font-size: 24px; width: 80px; height: 80px; <?php echo $cor . ' ' . $styles; ?>'>
+                                                            <p id="pcs-p"><?php echo $pc['patrimonio']; ?></p>
+                                                        </div>
+                                                    </button>
+                                                <?php endif; ?>
                                             </form>
                                         </div>
                                     <?php
@@ -108,8 +135,6 @@
 
 
 
-        <script src="config/js/alerts.js"></script>
-        <script src="config/node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
         <script src="config/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>

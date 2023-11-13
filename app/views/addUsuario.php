@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Adicionar User</title>
+    <link rel="shortcut icon" href="config/images/logo-five_icon.png" type="image/x-icon">
     <link rel="stylesheet" href="config/css/addUsuario.css">
     <link rel="stylesheet" href="config/css/cabecario.css">
     <link rel="stylesheet" href="config/node_modules/bootstrap/dist/css/bootstrap.min.css">

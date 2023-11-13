@@ -3,7 +3,7 @@ namespace app\controllers;
 
 use app\models\UsuarioModel;
 
-class UsuarioController
+class UsuarioController 
 {
     public function login()
     {
@@ -12,7 +12,6 @@ class UsuarioController
         $login = $_POST['login'];
         $senha = $_POST['senha-adm'];
 
-        // Verifique as credenciais no modelo
         $usuarioModel = new UsuarioModel();
         $autenticado = $usuarioModel->autenticarAdmin($login, $senha);
         
@@ -20,9 +19,7 @@ class UsuarioController
         if ($autenticado) {
             header("Location:?router=Site/menu");
         } else {
-            // Defina a mensagem de erro
             $_SESSION['error_admin'] = 'Dados inválidos';
-            // Redirecione para a página de login do administrador (loginAdm)
             header("Location:?router=Site/loginAdm");
         }
     }
@@ -53,10 +50,9 @@ class UsuarioController
             echo json_encode($response);
         }
     }
-
-
     
-    public function CriarNovoUsuario() {
+    public function CriarNovoUsuario() 
+    {
         session_start();
     
         $login = $_POST['login'];
@@ -69,15 +65,12 @@ class UsuarioController
     
         try {
             if ($usuarioModel->CriarNovoUsuario($login, $senha, $nome, $email, $nivelAcessoSelecionado)) {
-                // Usuário criado com sucesso, redirecione com a mensagem de sucesso
                 $_SESSION['success_message'] = 'Usuário criado com sucesso.';
             } else {
-                // Trate o caso em que a criação do usuário falhou
                 $_SESSION['error_message'] = 'Houve um erro ao criar o usuário.';
             }
             header("Location:?router=Site/addUsuario");
         } catch (\Exception $e) {
-            // Se ocorrer um erro
             $_SESSION['error_message'] = 'Houve um erro ao criar o usuário.';
         }
     }
@@ -89,4 +82,25 @@ class UsuarioController
         header("Location: ?router=Site/loginAdm"); // redireciona para a página de login de aluno
         exit;
     }
+
+    public function removerAcesso() {
+        session_start();
+        $codUsuario = $_POST['codusuario'];
+        $usuarioModel = new UsuarioModel();
+    
+        try {
+            if ($usuarioModel->removerPermissao($codUsuario)) {
+                $_SESSION['success_message'] = 'Permissão removida com sucesso.';
+            } else {
+                $_SESSION['error_message'] = 'Houve um erro ao remover a permissão.';
+            }
+        } catch (\Exception $e) {
+            // Se ocorrer um erro na model, captura a exceção e armazena a mensagem de erro
+            $_SESSION['error_message'] = $e->getMessage();
+        }
+    
+        header("Location:?router=Site/permissoes");
+    }
+    
+    
 }

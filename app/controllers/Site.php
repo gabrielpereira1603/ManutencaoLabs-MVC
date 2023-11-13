@@ -29,53 +29,94 @@ class Site extends Crud
         require_once __DIR__ . '/../views/loginAdm.php';
     }
 
-    public function menu() 
-    {
+    public function menu() {
         session_start();
-        // Verifique se o usuário está autenticado como administrador
         if (!isset($_SESSION['autenticado_admin']) || $_SESSION['autenticado_admin'] !== true) {
-            $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';            // O usuário não tem permissão para acessar esta página, redirecione-o para a página de login de aluno
+            $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';            
             header("Location:?router=Site/loginAdm");
             exit();
         }
+
+        if ($_SESSION['codnivel_acesso'] == 4) {
+            $_SESSION['error_admin'] = 'Você não tem permissão para acessar esta página!'; 
+            header("Location:?router=Site/paginaDeErro");
+            exit();
+        }
         $buscarLab = $this->buscarLaboratorio();
-        // O usuário está autenticado como administrador, permita o acesso à página menuAdm
-        require_once __DIR__ . '/../views/menuAdm.php';
+        require_once __DIR__ . '/../views/menu.php';
     }
 
     public function addUsuario() {
         session_start();
-        // Verifique se o usuário está autenticado como administrador
         if (!isset($_SESSION['autenticado_admin']) || $_SESSION['autenticado_admin'] !== true) {
-            $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';            // O usuário não tem permissão para acessar esta página, redirecione-o para a página de login de aluno
+            $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';            
             header("Location:?router=Site/loginAdm");
+            exit();
+        } else if (!isset($_SESSION['codnivel_acesso']) || ($_SESSION['codnivel_acesso'] == 1) || ($_SESSION['codnivel_acesso'] == 4)) {
+            $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';           
+            header("Location:?router=Site/loginAluno");
             exit();
         }
 
-        //trazer os niveis de acessos para o select
         $niveisAcesso = $this->getNiveisAcesso();
         require_once __DIR__ . '/../views/addUsuario.php';
     }
 
     public function EnviarReclamacao() {
         session_start();
-        // Verifique se o usuário está autenticado como administrador
         if (!isset($_SESSION['autenticado_admin']) || $_SESSION['autenticado_admin'] !== true) {
-            $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';            // O usuário não tem permissão para acessar esta página, redirecione-o para a página de login de aluno
+            $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';           
             header("Location:?router=Site/loginAdm");
             exit();  
         }
-        // Recupere as informações do computador a partir da solicitação POST
+        if ($_SESSION['codnivel_acesso'] == 4) {
+            $_SESSION['error_admin'] = 'Você não tem permissão para acessar esta página!'; 
+            header("Location:?router=Site/paginaDeErro"); 
+            exit();
+        }
+
         $codLaboratorio = $_POST['codlaboratorio'];
         $situacao = $_POST['situacao'];
         $patrimonio = $_POST['patrimonio'];
         $codComputador = $_POST['codcomputador'];
         $numeroLaboratorio = $_POST['numerolaboratorio'];
-
+        
         $buscarComponentes = $this->getComponentes();
-        // Carregue a página "EnviarReclamacao" aqui
+        $detalhesReclmacoes = $this->getDetalhesReclamacao($codComputador, $codLaboratorio);
         require_once __DIR__ . '/../views/EnviarReclamacao.php';
-                
     }
 
+    public function relatorioManutencao() {
+        session_start();
+        if (!isset($_SESSION['autenticado_admin']) || $_SESSION['autenticado_admin'] !== true) {
+            $_SESSION['error_admin'] = 'Você não tem permissão para acessar!';           
+            header("Location:?router=Site/loginAdm");
+            exit();
+        } else if (!isset($_SESSION['codnivel_acesso']) || ($_SESSION['codnivel_acesso'] == 1) || ($_SESSION['codnivel_acesso'] == 4)) {
+            $_SESSION['error_admin'] = 'Você não tem permissão para acessar!';           
+            header("Location:?router=Site/loginAluno");
+            exit();
+        }
+    
+        $buscarLab = $this->buscarLaboratorio();
+        $buscarUsuario = $this->getUsuarios();
+        require_once __DIR__ . '/../views/relatorioManutencao.php';
+    }
+    
+
+    public function permissoes() {
+        session_start();
+        if (!isset($_SESSION['autenticado_admin']) || $_SESSION['autenticado_admin'] !== true) {
+            $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';            
+            header("Location:?router=Site/loginAdm");
+            exit();
+        } else if (!isset($_SESSION['codnivel_acesso']) || ($_SESSION['codnivel_acesso'] == 1) || ($_SESSION['codnivel_acesso'] == 4)) {
+            $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';           
+            header("Location:?router=Site/loginAluno");
+            exit();
+        }
+
+        $buscarUsuario = $this->getAllUsers();
+        require_once __DIR__ . '/../views/permissoes.php';
+    }
 }

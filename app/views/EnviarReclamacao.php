@@ -3,38 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu - ADM</title>
+    <title>Central De Manutenções</title>
+    <link rel="shortcut icon" href="config/images/logo-five_icon.png" type="image/x-icon">
     <link rel="stylesheet" href="config/css/enviarReclamacao.css">
     <link rel="stylesheet" href="config/css/cabecario.css">
     <link rel="stylesheet" href="config/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="config/node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="config/js/alerts.js"></script>
 </head>
     <body>
         <?php
             include("cabecario.php");
-        ?>
+            if (isset($detalhesReclmacoes[0]['codreclamacao'])) {
+                $codReclamacao = $detalhesReclmacoes[0]['codreclamacao'];
+            } else {
+                $codReclamacao = null; // Ou defina um valor padrão se necessário
+            }      
 
-        <?php
-            // Verifique se os dados do formulário foram enviados
-            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                // Recupere os dados do formulário
-                $codLaboratorio = $_POST['codlaboratorio'];
-                $situacao = $_POST['situacao'];
-                $patrimonio = $_POST['patrimonio'];
-                $codComputador = $_POST['codcomputador'];
-                $numeroLaboratorio = $_POST['numerolaboratorio'];
-
-                // Agora você pode usar essas variáveis conforme necessário na sua página "EnviarReclamacao"
-                // Por exemplo, você pode exibi-los assim:
-                echo "Código do Laboratório: " . $codLaboratorio . "<br>";
-                echo "Situação: " . $situacao . "<br>";
-                echo "Patrimônio: " . $patrimonio . "<br>";
-                echo "Código do Computador: " . $codComputador . "<br>";
-                echo "Código do Computador: " . $numeroLaboratorio . "<br>";
-                var_dump($_SESSION);
-                // Faça o processamento adicional com esses dados, se necessário
+            if (isset($detalhesReclamacoes[0]['situacao'])) {
+                $situacaoDoComputador = $detalhesReclamacoes[0]['situacao'];
+            } else {
+                $situacaoDoComputador = null; // Ou defina um valor padrão se necessário
             }
         ?>
-
         <div class="accordion" id="accordionExample">
             <div class="accordion-item">
                 <h2 class="accordion-header" id="headingOne">
@@ -49,9 +41,20 @@
                 <?php if (isset($_SESSION['codnivel_acesso']) && $_SESSION['codnivel_acesso'] == 1): ?>
                     <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                         <div class="accordion-body">
-                            <div id="select-pc" style="font-size: 20px; font-weight: 700; border: solid 1.5px black;">
-                                <?php echo $patrimonio; ?>
-                            </div>
+                            <?php if ($situacao == 1): ?>
+                                <div id="select-pc" style="font-size: 20px; font-weight: 700; border: solid 1.5px black; background-color: green;">
+                                    <?php echo $patrimonio; ?>
+                                </div>
+                            <?php elseif ($situacao == 2): ?>
+                                <div id="select-pc" style="font-size: 20px; font-weight: 700; border: solid 1.5px black; background-color: yellow;">
+                                    <?php echo $patrimonio; ?>
+                                </div>
+                            <?php elseif ($situacao == 3): ?>
+                                <div id="select-pc" style="font-size: 20px; font-weight: 700; border: solid 1.5px black; background-color: red;">
+                                    <?php echo $patrimonio; ?>
+                                </div>
+                            <?php endif; ?>
+
                             <form action="?router=ReclamacaoController/enviarReclamacao" method="POST">
                                 <input type="hidden" name="codlaboratorio" value="<?php echo $codLaboratorio?>">
                                 <input type="hidden" name="situacao" value="<?php echo $situacao?>">
@@ -88,30 +91,78 @@
                     <?php if (isset($_SESSION['codnivel_acesso']) && $_SESSION['codnivel_acesso'] > 1): ?>
                         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                             <div class="accordion-body">
-                                <div id="select-pc" style="font-size: 20px; font-weight: 700; border: solid 1.5px black;">
-                                    <?php echo $patrimonio; ?>
-                                </div>
-                                <form action="#" method="POST">
-                                
-                                    <div class="ckBox">
-                                        <?php foreach($buscarComponentes as $componente): ?>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" name="<?php echo $componente['nome_componente'] ?>" value="<?php echo $componente['nome_componente']?>" id="<?php echo $componente['codcomponente']?>">
-                                                <label class="form-check-label" for="<?php echo $componente['codcomponente'] ?>"> 
-                                                    <?php echo $componente['nome_componente'] ?> 
-                                                </label>
-                                            </div>
-                                        <?php endforeach; ?>
+                                <?php if ($situacao == 1): ?>
+                                    <div id="select-pc" style="font-size: 20px; font-weight: 700; border: solid 1.5px black; background-color: green;">
+                                        <?php echo $patrimonio; ?>
                                     </div>
+                                <?php elseif ($situacao == 2): ?>
+                                    <div id="select-pc" style="font-size: 20px; font-weight: 700; border: solid 1.5px black; background-color: yellow;">
+                                        <?php echo $patrimonio; ?>
+                                    </div>
+                                <?php elseif ($situacao == 3): ?>
+                                    <div id="select-pc" style="font-size: 20px; font-weight: 700; border: solid 1.5px black; background-color: red;">
+                                        <?php echo $patrimonio; ?>
+                                    </div>
+                                <?php endif; ?>
 
-                                    <div class="form-floating">
-                                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px; margin-bottom: 20px;" name="descricao_manutencao"></textarea>
+                                <form action="?router=ManutencaoController/concluirManutencao" method="POST">
+                                    <input type="hidden" name="codlaboratorio" value="<?php echo $codLaboratorio?>">
+                                    <input type="hidden" name="codcomputador" value="<?php echo $codComputador?>">
+                                    <input type="hidden" name="nomeadmin" value="<?php echo $_SESSION['nomeadmin'];?>">
+                                    <input type="hidden" name="codusuario" value="<?php echo $_SESSION['codusuario'];?>">
+                                    <input type="hidden" name="codreclamacao" value="<?php echo $codReclamacao;?>">
+
+     
+
+                                    <div class="form-floating" id="descricao-manutencao">
+                                        <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px; margin-bottom: 20px;" name="descricao_manutencao" disable></textarea>
                                         <label for="floatingTextarea2">Descrição Da Manutenção:</label>
                                     </div>
 
-                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                        <button type="submit" class="btn btn-primary" >Concluir Manutenção</button>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Usuario</th>
+                                                    <th>RM</th>
+                                                    <th>Reclamação</th>
+                                                    <th>Laboratório</th>
+                                                    <th>Computador</th>
+                                                    <th>Situação</th>
+                                                    <th>Descrição</th>
+                                                    <th>Componentes</th>
+                                                    <th>Data/Hora</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php foreach ($detalhesReclmacoes as $row): ?>
+                                                    <tr>
+                                                        <td><?php echo $row["nome_usuario"]; ?></td>
+                                                        <td><?php echo $row["login"]; ?></td>
+                                                        <td><?php echo $row["codreclamacao"]; ?></td>
+                                                        <td><?php echo $row["numerolaboratorio"]; ?></td>
+                                                        <td><?php echo $row["patrimonio"]; ?></td>
+                                                        <td><?php echo $row["situacao"]; ?></td>
+                                                        <td><?php echo $row["descricao_reclamacao"]; ?></td>
+                                                        <td><?php echo $row["componentes"]; ?></td>
+                                                        <td><?php echo date("d/m/Y H:i:s", strtotime($row["datahora_reclamacao"])); ?></td>
+                                                    </tr>
+                                                    <hr>
+                                                <?php endforeach; ?>
+                                            </tbody>
+                                        </table>
+                                        <hr>
                                     </div>
+
+                                    <?php if (!empty($detalhesReclmacoes)): ?>
+                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                            <button type="submit" class="btn btn-primary">Concluir Manutenção</button>
+                                        </div>
+                                    <?php else: ?>
+                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                            <button type="button" class="btn btn-primary" disabled>Concluir Manutenção</button>
+                                        </div>
+                                    <?php endif; ?>
                                 </form>
                             </div>
                         </div>

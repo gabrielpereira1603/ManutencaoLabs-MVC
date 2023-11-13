@@ -6,6 +6,7 @@
     <title>Manutenção Labs - ADM</title>
     <link rel="stylesheet" href="config/css/cabecario.css">
     <link rel="stylesheet" href="config/css/index.css">
+    <link rel="shortcut icon" href="config/images/logo-five_icon.png" type="image/x-icon">
     <link rel="stylesheet" href="config/node_modules/bootstrap/dist/css/bootstrap.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="config/node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
@@ -24,10 +25,6 @@
         </script>
         <?php unset($_SESSION['error_admin']); ?>
         <?php endif; ?>
-
-        <?php
-            var_dump($_SESSION)
-        ?>
 
         <section class="container">
             <div id="form-container">
@@ -60,12 +57,7 @@
                 </form>
                 
             </div>
-
         </section>
-
         <script src="config/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
     </body>
-
-
 </html>

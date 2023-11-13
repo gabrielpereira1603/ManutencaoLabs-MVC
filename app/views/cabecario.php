@@ -21,14 +21,14 @@
                 <?php else: ?>
                     <?php if (isset($_SESSION['codnivel_acesso']) && $_SESSION['codnivel_acesso'] == 3): ?>
                         <ul class="navbar-nav ms-auto">
-                            <li class="nav-item"><a class="nav-link" href="?router=Site/menuAdm">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" href="?router=Site/menu">Home</a></li>
                             <li class="nav-item"><a class="nav-link" href="dashboard.php">Dashboard</a></li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="relatoriosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Relatórios
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="relatoriosDropdown">
-                                    <li><a class="dropdown-item" href="relatorio-manutencao.php">Relatório De Manutenções</a></li>
+                                    <li><a class="dropdown-item" href="?router=Site/relatorioManutencao">Relatório De Manutenções</a></li>
                                     <li><hr class="dropdown-divider"></li>
                                     <li><a class="dropdown-item" href="relatorio-componente.php">Relatório De Componentes</a></li>
                                 </ul>
@@ -38,13 +38,11 @@
                                     Controle De Usuário
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="controleUsuarioDropdown">
-                                    <li><a class="dropdown-item" href="gerenciar-envio-email.php">Robô E-mail</a></li>
                                     <li><a class="dropdown-item" href="editar-useradmin.php">Alterar Usuário</a></li>
-                                    <li><a class="dropdown-item" href="gerenciar-permissao.php">Gerenciar Permissões</a></li>
+                                    <li><a class="dropdown-item" href="?router=Site/permissoes">Gerenciar Permissões</a></li>
                                     <li><a class="dropdown-item" href="?router=Site/addUsuario">Adicionar Novo Usuário</a></li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="criar-useraluno.php">Adicionar Novo Aluno</a></li>
-                                    <li><a class="dropdown-item" href="editar-useraluno.php">Alterar Usuário Aluno</a></li>
+                                    <li><a class="dropdown-item" href="gerenciar-envio-email.php">Robô E-mail</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item"><a class="nav-link" href="criar-laboratorio.php">Manutenção De Laboratórios</a></li>
@@ -64,7 +62,7 @@
                             <?php if (isset($_SESSION['codnivel_acesso']) && $_SESSION['codnivel_acesso'] == 1): ?>
                                 <ul class="navbar-nav ms-auto">
                                     <li class="nav-item"><a class="nav-link" href="https://unifunec.edu.br/" target="_blank">O Unifunec</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="menu-aluno.php">Home</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="?router=Site/menu">Home</a></li>
                                     <li class="nav-item"><a class="nav-link" href="reclamacao-aluno.php">Relatórios de Reclamações</a></li>
                                     <li class="nav-item">
                                         <form method="post" action="?router=UsuarioController/logout">

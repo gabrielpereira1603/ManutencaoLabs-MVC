@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manutenção Labs - ADM</title>
+    <title>Manutenção Labs - Aluno</title>
+    <link rel="shortcut icon" href="config/images/logo-five_icon.png" type="image/x-icon">
     <link rel="stylesheet" href="config/css/cabecario.css">
     <link rel="stylesheet" href="config/css/index.css">
     <link rel="stylesheet" href="config/node_modules/bootstrap/dist/css/bootstrap.min.css">
@@ -17,6 +18,14 @@
             session_start();
             include("cabecario.php");  
         ?>
+
+        <?php if (isset($_SESSION['error_admin'])): ?>
+        <script>
+            showErrorAlert('<?php echo $_SESSION['error_admin']; ?>');
+        </script>
+        <?php unset($_SESSION['error_admin']); ?>
+        <?php endif; ?>
+
         <section class="container">
             <div id="form-container">
                 <form class="formulario" action="?router=UsuarioController/login" method="POST" id="form">
@@ -48,10 +57,7 @@
                 </form>
                 
             </div>
-
         </section>
-
         <script src="config/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
     </body>
 </html>

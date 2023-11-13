@@ -110,16 +110,21 @@ body {
 
     .ckBox {
         display: grid;
-        grid-template-columns: 60% 35%;
-        grid-template-rows: 50% 50%;
+        grid-template-columns: 60% 50%;
+        grid-template-rows: 50% 50% 50%;
         gap: 5px;
+        margin: 5px;
     }
 
     .text-reclamacao {
-        margin-top: 40px;
+        margin-top: 40%;
     }
 
     .d-grid {
         margin-top: 20px;
     }
+}
+
+#descricao-manutencao {
+    margin-top: 20px;
 }

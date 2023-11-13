@@ -28,11 +28,11 @@ class ReclamacaoController extends ReclamacaoModel
     
             if ($success) { 
                 // Redirecione o usuário para uma página de sucesso ou outra página apropriada
-                $_SESSION['success'] = 'Reclamação enviada com sucesso!';
+                $_SESSION['success_message'] = 'Reclamação enviada com sucesso!';
                 header("Location: ?router=Site/menu");
             } else {
                 // Trate erros, se houverem
-                $_SESSION['error'] = 'Houve um erro ao enviar a reclamação.';
+                $_SESSION['error_message'] = 'Houve um erro ao enviar a reclamação.';
                 // Redirecione o usuário para uma página de erro
             }
         } catch (\Exception $e) {
@@ -41,4 +41,5 @@ class ReclamacaoController extends ReclamacaoModel
         }
     }
     
+
 }

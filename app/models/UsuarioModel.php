@@ -235,5 +235,21 @@ class UsuarioModel extends Connection
         // return true;
     }
 
+    public function removerPermissao($codUsuario)
+    {
+        $conn = $this->connect();
     
+        $sql = "UPDATE usuario SET nivel_acesso_fk = 4 WHERE codusuario = :codUsuario";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':codUsuario', $codUsuario);
+        $stmt->execute();
+
+        return true;
+    }
+    
+
+    public function adicionarPermissao($codUsuario)
+    {
+
+    }
 }
