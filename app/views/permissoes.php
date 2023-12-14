@@ -15,7 +15,6 @@
     <body>
         <?php
             include("cabecario.php");
-            var_dump($_SESSION);
         ?>
 
         <?php if (isset($_SESSION['error_message'])): ?>
@@ -38,48 +37,69 @@
 
         <form action="?router=UsuarioController/removerAcesso" method="POST" class="form-group">
             <div class="permissao">
-
-                <legend>Gerenciar permissões de usuário</legend>
+                <legend>Permissões de usuário</legend>
                 <label for="nivel_acesso">Usuários:</label>
                 <select class="form-select" aria-label="Default select example" name="usuario" id="select-usuario">
+                    <option value="">Selecione um Usuário</option>
                     <?php foreach ($buscarUsuario as $usuario): ?>
                         <option value="<?php echo $usuario['codusuario']; ?>"><?php echo $usuario['nome_usuario']; ?></option>
                     <?php endforeach; ?>
                 </select>
 
-                <!-- <div class="form-floating mb-3">
-                    <input type="number" class="form-control" id="input-rm" name="rm" placeholder="RM do usuário">
-                    <label for="RM">Login:</label>
-                </div> -->
+                <label for="nivel_acesso">Selecione o nível de acesso:</label>
+                <select class="form-select mb-3" aria-label="Default select example" name="nivel-acesso" id="select-acesso">
+                    <option value="">Selecione um acesso</option>
+                    <?php foreach ($nivelAcesso as $acesso): ?>
+                        <option value="<?php echo $acesso['codnivel_acesso']; ?>"><?php echo $acesso['tipo_acesso']; ?></option>
+                    <?php endforeach; ?>
+                </select>
+
+                <div class="form-floating mb-3">
+                    <input type="number" class="form-control" id="login-user" name="login" placeholder="RM do usuário">
+                    <label for="RM" name="login">Login:</label>
+                </div>
 
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-danger" type="submit" name="remover" >Remover permissão</button>
+                    <button class="btn btn-danger" type="submit" name="remover" >Alterar permissão</button>
                 </div>
+                
             </div>
 
             <div class="table-permissao">
-                <legend>Lista de usuários sem permissão:</legend>
+                <table class="table table-striped table-hover" >
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">RM</th>
+                            <th scope="col">Nome</th>
+                        </tr>
+                        </thead>
+                    <tbody>
+                        <legend>Lista de usuários sem permissão:</legend>
+                        <?php foreach ($semPermissao as $permissao): ?>
+                            <tr>
+                                <td><?php echo $permissao['login']?></td>
+                                <td><?php echo $permissao['nome_usuario']?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
             </div>
         </form>
 
-        <!-- Elemento para exibir o valor selecionado -->
-        <span id="selected-value"></span>
-
-        <!-- Seu código JavaScript -->
         <script>
-            const selectUsuario = document.getElementById('select-usuario');
-            const selectedValue = document.getElementById('selected-value');
+            document.getElementById("select-usuario").addEventListener("change", function () {
+                var selectedUsuario = this.value;
 
-            selectUsuario.addEventListener('change', function () {
-                // Obtenha o valor selecionado no <select>
-                const selectedOption = selectUsuario.options[selectUsuario.selectedIndex];
-                const codUsuario = selectedOption.value;
-
-                // Exiba o valor selecionado no elemento <span>
-                selectedValue.textContent = codUsuario;
+                fetch('?router=UsuarioController/getLogin&codUsuario=' + selectedUsuario)
+                .then(response => response.json())
+                .then(jsonResponse => {
+                    // Verifica se o login está definido no objeto antes de atribuir ao campo
+                    if (jsonResponse[0].login !== undefined) {
+                        document.getElementById("login-user").value = jsonResponse[0].login;
+                    }
+                });
             });
         </script>
-
         <script src="config/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>

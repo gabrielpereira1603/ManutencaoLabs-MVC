@@ -15,7 +15,6 @@
     <body>
         <?php
             include("cabecario.php");
-            var_dump($_SESSION);
         ?>
 
         <?php if (isset($_SESSION['error_message'])): ?>

@@ -22,7 +22,7 @@
                     <?php if (isset($_SESSION['codnivel_acesso']) && $_SESSION['codnivel_acesso'] == 3): ?>
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item"><a class="nav-link" href="?router=Site/menu">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" href="dashboard.php">Dashboard</a></li>
+                            <li class="nav-item"><a class="nav-link" href="?router=Site/dashboard">Dashboard</a></li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="relatoriosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Relatórios
@@ -45,7 +45,7 @@
                                     <li><a class="dropdown-item" href="gerenciar-envio-email.php">Robô E-mail</a></li>
                                 </ul>
                             </li>
-                            <li class="nav-item"><a class="nav-link" href="criar-laboratorio.php">Manutenção De Laboratórios</a></li>
+                            <li class="nav-item"><a class="nav-link" href="?router=Site/manutencaoLabs">Manutenção De Laboratórios</a></li>
                             <li class="nav-item">
                                 <form method="post" action="?router=UsuarioController/logout">
                                     <button type="submit" class="btn btn-link nav-link sair-button">Sair</button>
@@ -63,7 +63,7 @@
                                 <ul class="navbar-nav ms-auto">
                                     <li class="nav-item"><a class="nav-link" href="https://unifunec.edu.br/" target="_blank">O Unifunec</a></li>
                                     <li class="nav-item"><a class="nav-link" href="?router=Site/menu">Home</a></li>
-                                    <li class="nav-item"><a class="nav-link" href="reclamacao-aluno.php">Relatórios de Reclamações</a></li>
+                                    <li class="nav-item"><a class="nav-link" href="?router=Site/historicoReclamacao">Relatórios de Reclamações</a></li>
                                     <li class="nav-item">
                                         <form method="post" action="?router=UsuarioController/logout">
                                             <button type="submit" class="btn btn-link nav-link sair-button">Sair</button>

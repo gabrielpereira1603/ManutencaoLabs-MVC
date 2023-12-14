@@ -7,11 +7,9 @@ class ReclamacaoModel extends Connection
     public function inserirReclamacao($codComputador, $patrimonio, $codLaboratorio, $reclamacao, $componentesSelecionados) {
         $conn = $this->connect();
     
-        // Recupere o código do usuário a partir da sessão
         $nomeAluno = $_SESSION['nomeadmin'];
         $codUsuario = $_SESSION['codusuario'];
     
-        // Verifique se o computador pertence ao laboratório correto
         $sql = "SELECT codlaboratorio_fk FROM computador WHERE patrimonio = :patrimonio AND codlaboratorio_fk = :codLaboratorio";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':patrimonio', $patrimonio);
@@ -20,10 +18,9 @@ class ReclamacaoModel extends Connection
         $row = $stmt->fetch(\PDO::FETCH_ASSOC);
     
         if (!$row) {
-            return false; // O computador não pertence ao laboratório selecionado
+            return false; 
         }
     
-        // Inserir a reclamação
         $sql = "INSERT INTO reclamacao (descricao, status, datahora_reclamacao, codcomputador_fk, codlaboratorio_fk, codusuario_fk) VALUES (:reclamacao, 'aberta', NOW(), :codComputador, :codLaboratorio, :codUsuario)";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':reclamacao', $reclamacao);
@@ -32,26 +29,106 @@ class ReclamacaoModel extends Connection
         $stmt->bindParam(':codUsuario', $codUsuario);
         $stmt->execute();
         
-        // Obter o ID da reclamação recém-inserida
         $codReclamacao = $conn->lastInsertId();
     
-        // Atualizar a situação do computador para "em manutenção"
         $sql = "UPDATE computador SET codsituacao_fk = 2 WHERE codcomputador = :codComputador";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':codComputador', $codComputador);
         $stmt->execute();
     
-        // Inserir os componentes selecionados na tabela "reclamacao_componente"
         foreach ($componentesSelecionados as $componente) {
             $sql = "INSERT INTO reclamacao_componente (codreclamacao_fk, codcomponente_fk) VALUES (:codReclamacao, :codComponente)";
             $stmt = $conn->prepare($sql);
             $stmt->bindParam(':codReclamacao', $codReclamacao);
-            $stmt->bindParam(':codComponente', $componente, \PDO::PARAM_INT); // Defina o tipo de dado como INT
+            $stmt->bindParam(':codComponente', $componente, \PDO::PARAM_INT);
             $stmt->execute();
         }
     
-        return true; // Indica sucesso
+        return true; 
     }
     
+    public function buscarReclamacao($codreclamacao, $numeroLaboratorio, $patrimonio) {
+        $conn = $this->connect();
+    
+        $sql = "SELECT 
+            r.codreclamacao,
+            r.descricao,
+            l.numerolaboratorio,
+            u.nome_usuario,
+            c.patrimonio,
+            c.codcomputador,
+            GROUP_CONCAT(co.nome_componente) AS componentes,
+            s.codsituacao
+        FROM reclamacao r
+        JOIN laboratorio l ON r.codlaboratorio_fk = l.codlaboratorio
+        JOIN usuario u ON r.codusuario_fk = u.codusuario 
+        JOIN computador c ON r.codcomputador_fk = c.codcomputador
+        JOIN situacao s ON c.codsituacao_fk = s.codsituacao
+        LEFT JOIN reclamacao_componente rc ON r.codreclamacao = rc.codreclamacao_fk
+        LEFT JOIN componente co ON rc.codcomponente_fk = co.codcomponente
+        WHERE r.codreclamacao = :codreclamacao
+        GROUP BY r.codreclamacao, l.numerolaboratorio, u.nome_usuario, c.patrimonio
+        LIMIT 0, 25;";
+    
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':codreclamacao', $codreclamacao);
+        $stmt->execute();
+    
+        $result = $stmt->fetchAll();
+    
+        return $result;
+    }
 
+    public function deleteReclamacao($codcomputador, $codreclamacao, $descricao, $componentesString) {
+        $conn = $this->connect();
+
+        // Lógica para excluir a reclamação e seus componentes associados
+        $sqlDeleteComponentes = "DELETE FROM reclamacao_componente WHERE codreclamacao_fk = :codreclamacao";
+        $stmtDeleteComponentes = $conn->prepare($sqlDeleteComponentes);
+        $stmtDeleteComponentes->bindParam(':codreclamacao', $codreclamacao);
+        $stmtDeleteComponentes->execute();
+
+        $sqlDeleteReclamacao = "DELETE FROM reclamacao WHERE codreclamacao = :codreclamacao";
+        $stmtDeleteReclamacao = $conn->prepare($sqlDeleteReclamacao);
+        $stmtDeleteReclamacao->bindParam(':codreclamacao', $codreclamacao);
+        $stmtDeleteReclamacao->execute();
+
+        $sql = "UPDATE computador SET codsituacao_fk = 1 WHERE codcomputador = :codComputador";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':codComputador', $codcomputador);
+        $stmt->execute();
+
+        return true;
+    }
+
+    public function editReclamacao($codreclamacao, $descricao, $componentesString) {
+        $conn = $this->connect();
+        
+        // Lógica para editar a reclamação
+        $sqlUpdate = "UPDATE reclamacao SET descricao = :descricao WHERE codreclamacao = :codreclamacao";
+        $stmtUpdate = $conn->prepare($sqlUpdate);
+        $stmtUpdate->bindParam(':descricao', $descricao);
+        $stmtUpdate->bindParam(':codreclamacao', $codreclamacao);
+        $stmtUpdate->execute();
+    
+        // Lógica para editar os componentes associados à reclamação
+        $sqlDeleteComponentes = "DELETE FROM reclamacao_componente WHERE codreclamacao_fk = :codreclamacao";
+        $stmtDeleteComponentes = $conn->prepare($sqlDeleteComponentes);
+        $stmtDeleteComponentes->bindParam(':codreclamacao', $codreclamacao);
+        $stmtDeleteComponentes->execute();
+    
+        if (!empty($componentesString)) {
+            $componentes = explode(',', $componentesString);
+            $sqlInsertComponentes = "INSERT INTO reclamacao_componente (codreclamacao_fk, codcomponente_fk) VALUES (:codreclamacao, :codcomponente)";
+            $stmtInsertComponentes = $conn->prepare($sqlInsertComponentes);
+    
+            foreach ($componentes as $codcomponente) {
+                $stmtInsertComponentes->bindParam(':codreclamacao', $codreclamacao);
+                $stmtInsertComponentes->bindParam(':codcomponente', $codcomponente);
+                $stmtInsertComponentes->execute();
+            }
+        }
+
+        return true;
+    }
 }

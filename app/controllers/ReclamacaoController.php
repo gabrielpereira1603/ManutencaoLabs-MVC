@@ -15,11 +15,9 @@ class ReclamacaoController extends ReclamacaoModel
             $numeroLaboratorio = $_POST['numerolaboratorio'];
             $reclamacao = $_POST['reclamacao'];
     
-            // Recupere os componentes selecionados do formulário e converta em uma string
             $componentesSelecionados = isset($_POST['componente']) ? $_POST['componente'] : [];
             $componentesString = implode(', ', $componentesSelecionados);
 
-    
             session_start();
             $codUsuario = $_SESSION['codusuario']; 
     
@@ -27,19 +25,63 @@ class ReclamacaoController extends ReclamacaoModel
             $success = $reclamacaoModel->inserirReclamacao($codComputador, $patrimonio, $codLaboratorio, $reclamacao, $componentesSelecionados);
     
             if ($success) { 
-                // Redirecione o usuário para uma página de sucesso ou outra página apropriada
                 $_SESSION['success_message'] = 'Reclamação enviada com sucesso!';
                 header("Location: ?router=Site/menu");
             } else {
-                // Trate erros, se houverem
                 $_SESSION['error_message'] = 'Houve um erro ao enviar a reclamação.';
-                // Redirecione o usuário para uma página de erro
             }
         } catch (\Exception $e) {
-            // Em caso de exceção, você pode tratar o erro aqui ou registrar em um arquivo de log
             echo 'Erro: ' . $e->getMessage();
         }
     }
     
+    public function editarReclamacao() {
+        session_start();
+        $codreclamacao = $_POST['codreclamacao'];
+        $numeroLaboratorio = $_POST['numerolaboratorio'];
+        $patrimonio = $_POST['patrimonio'];
+        
+        $reclamacaoModel = new ReclamacaoModel();
+        
+        $detalhesReclamacao = $reclamacaoModel->buscarReclamacao($codreclamacao, $numeroLaboratorio, $patrimonio);
+
+        $_SESSION['resultado_reclamacao'] = $detalhesReclamacao;
+        header("Location: ?router=Site/editarReclamacao");
+    }
+
+    public function editOrDelete() {
+        session_start();
+        $acao = isset($_POST['acao']) ? $_POST['acao'] : '';
+        $codreclamacao = $_POST['codreclamacao'];
+        $codcomputador = $_POST['codcomputador'];
+        $descricao = isset($_POST['reclamacao']) ? $_POST['reclamacao'] : '';
+        $componentesSelecionados = isset($_POST['componente']) ? $_POST['componente'] : [];
+        $componentesString = implode(', ', $componentesSelecionados);
+        
+        $reclamacaoModel = new ReclamacaoModel();
+
+        if ($acao == 'excluir') {
+            $delete = $reclamacaoModel->deleteReclamacao($codcomputador, $codreclamacao, $descricao, $componentesString);
+            if ($delete) {
+                $_SESSION['success_message'] = 'Reclamação excluida com sucesso';
+                header("Location: ?router=Site/historicoReclamacao");
+
+            } else {
+                $_SESSION['error_message'] = 'Houve um erro ao excluir o Reclamação';
+                header("Location: ?router=Site/historicoReclamacao");
+            }
+            
+        } elseif ($acao == 'editar') {
+            $edit = $reclamacaoModel->editReclamacao($codreclamacao, $descricao, $componentesString);
+            if ($edit) {
+                $_SESSION['success_message'] = 'Reclamação editada com sucesso';
+                header("Location: ?router=Site/historicoReclamacao");
+            } else {
+                $_SESSION['error_message'] = 'Houve um erro ao editar o Reclamação';
+                header("Location: ?router=Site/historicoReclamacao");
+            }
+            
+        }
+    }
 
 }

@@ -170,5 +170,172 @@ class Crud extends Connection
             die($e->getMessage());
         }
     }
+
+    public function reclamacaoComp() {
+        $conn = $this->connect();
+        try {
+            $stmt = $conn->prepare('SELECT 
+                componente.nome_componente,
+                COUNT(reclamacao.codreclamacao) AS total_reclamacoes
+            FROM 
+                componente
+            JOIN 
+                reclamacao_componente ON componente.codcomponente = reclamacao_componente.codcomponente_fk
+            JOIN 
+                reclamacao ON reclamacao_componente.codreclamacao_fk = reclamacao.codreclamacao
+            GROUP BY 
+                componente.codcomponente, componente.nome_componente
+            ORDER BY 
+                total_reclamacoes DESC
+            LIMIT 5;');
+            if ($stmt === false) {
+                throw new \Exception('Houve um erro na preparação da consulta SQL');
+            }
+            $stmt->execute();
+            $componentes = $stmt->fetchAll();
+            return $componentes;
+        } catch (\PDOException $e) {
+            die("Erro de conexão: " . $e->getMessage());
+        } catch (\Exception $e) {
+            die($e->getMessage());
+        }
+    }
+    
+    public function dahsboardSituacao() {
+        $conn = $this->connect();
+        try {
+            $stmt = $conn->prepare("SELECT 
+            laboratorio.numerolaboratorio,
+            SUM(CASE WHEN situacao.tiposituacao = 'Disponível' THEN 1 ELSE 0 END) AS total_disponiveis,
+            SUM(CASE WHEN situacao.tiposituacao = 'Indisponível' THEN 1 ELSE 0 END) AS total_indisponiveis,
+            SUM(CASE WHEN situacao.tiposituacao = 'Em Manutenção' THEN 1 ELSE 0 END) AS total_manutencao
+        FROM 
+            laboratorio
+        JOIN 
+            computador ON laboratorio.codlaboratorio = computador.codlaboratorio_fk
+        JOIN 
+            situacao ON computador.codsituacao_fk = situacao.codsituacao
+        GROUP BY 
+            laboratorio.codlaboratorio, laboratorio.numerolaboratorio
+        ORDER BY 
+            laboratorio.numerolaboratorio ASC;
+        ");
+            if ($stmt === false) {
+                throw new \Exception('Houve um erro na preparação da consulta SQL');
+            }
+            $stmt->execute();
+            $componentes = $stmt->fetchAll();
+            return $componentes;
+        } catch (\PDOException $e) {
+            die("Erro de conexão: " . $e->getMessage());
+        } catch (\Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function reclamacaoLab() {
+        $conn = $this->connect();
+        try {
+            $stmt = $conn->prepare("SELECT 
+            laboratorio.numerolaboratorio,
+                COUNT(reclamacao.codreclamacao) AS total_reclamacoes
+            FROM 
+                laboratorio
+            LEFT JOIN 
+                computador ON laboratorio.codlaboratorio = computador.codlaboratorio_fk
+            LEFT JOIN 
+                reclamacao ON computador.codcomputador = reclamacao.codcomputador_fk
+            GROUP BY 
+                laboratorio.codlaboratorio, laboratorio.numerolaboratorio
+            ORDER BY 
+                total_reclamacoes DESC;        
+            ");
+            if ($stmt === false) {
+                throw new \Exception('Houve um erro na preparação da consulta SQL');
+            }
+            $stmt->execute();
+            $componentes = $stmt->fetchAll();
+            return $componentes;
+        } catch (\PDOException $e) {
+            die("Erro de conexão: " . $e->getMessage());
+        } catch (\Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function manutencaoUser() {
+        $conn = $this->connect();
+        try {
+            $stmt = $conn->prepare("SELECT 
+            usuario.nome_usuario AS nomeadmin,
+            COUNT(manutencao.codmanutencao) AS total_manutencoes
+            FROM 
+                usuario
+            INNER JOIN 
+                manutencao ON usuario.codusuario = manutencao.codusuario_fk
+            GROUP BY 
+                usuario.codusuario, usuario.nome_usuario
+            ORDER BY 
+                total_manutencoes DESC
+            LIMIT 5;                
+            ");
+            if ($stmt === false) {
+                throw new \Exception('Houve um erro na preparação da consulta SQL');
+            }
+            $stmt->execute();
+            $componentes = $stmt->fetchAll();
+            return $componentes;
+        } catch (\PDOException $e) {
+            die("Erro de conexão: " . $e->getMessage());
+        } catch (\Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function getUserNotPermisao() {
+        $conn = $this->connect();
+
+        try {
+            $stmt = $conn->prepare("SELECT * FROM usuario WHERE nivel_acesso_fk = 4;                
+            ");
+            if ($stmt === false) {
+                throw new \Exception('Houve um erro na preparação da consulta SQL');
+            }
+            $stmt->execute();
+            $componentes = $stmt->fetchAll();
+            return $componentes;
+        } catch (\PDOException $e) {
+            die("Erro de conexão: " . $e->getMessage());
+        } catch (\Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function reclamacaoAluno($codusuario) {
+        $conn = $this->connect();
+        
+        try {
+            $stmt = $conn->prepare("SELECT r.codreclamacao, r.descricao, r.status, r.codcomputador_fk, l.numerolaboratorio, u.nome_usuario, r.datahora_reclamacao, c.patrimonio,
+            GROUP_CONCAT(co.nome_componente SEPARATOR ', ') as componentes
+            FROM reclamacao r 
+            JOIN laboratorio l ON r.codlaboratorio_fk = l.codlaboratorio 
+            JOIN usuario u ON r.codusuario_fk = u.codusuario
+            JOIN computador c ON r.codcomputador_fk = c.codcomputador
+            LEFT JOIN reclamacao_componente rc ON r.codreclamacao = rc.codreclamacao_fk
+            LEFT JOIN componente co ON rc.codcomponente_fk = co.codcomponente
+            WHERE r.codusuario_fk= '$codusuario' AND r.status = 'aberta' AND c.codsituacao_fk = 2
+            GROUP BY r.codreclamacao");
+            if ($stmt === false) {
+                throw new \Exception('Houve um erro na preparação da consulta SQL');
+            }
+            $stmt->execute();
+            $componentes = $stmt->fetchAll();
+            return $componentes;
+        } catch (\PDOException $e) {
+            die("Erro de conexão: " . $e->getMessage());
+        } catch (\Exception $e) {
+            die($e->getMessage());
+        }
+    }
     
 }

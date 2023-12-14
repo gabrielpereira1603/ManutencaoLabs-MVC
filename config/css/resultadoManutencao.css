@@ -1,0 +1,29 @@
+.table-responsive {
+    padding: 50px;
+}
+
+.titulo {
+    text-align: center;
+    margin-top: 250px;
+}
+
+.table {
+    padding: 10px;
+    border-radius: 10px;
+}
+
+h2 {
+    text-align: center;
+    padding-top: 50px;
+}
+
+.gerar-relatorio {
+    margin-bottom: 50px;
+}
+.relatorio-email {
+    padding: 20px 100px;
+    margin-bottom: 20px;
+}
+.dataTables_wrapper .dataTables td {
+    padding: 4px; /* Ajuste o tamanho do preenchimento conforme necessário */
+}

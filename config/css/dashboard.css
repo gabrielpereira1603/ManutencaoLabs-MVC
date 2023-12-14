@@ -1,0 +1,63 @@
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+.title-principal {
+    text-align: center;
+    margin-top: 100px;
+}
+
+.reclamacao-comp {
+    padding: 50px;
+}
+
+.reclamacao-comp legend {
+    text-align: center;
+}
+
+.computadores-laboratorio {
+    padding: 50px;
+}
+
+.computadores-laboratorio h3, p {
+    text-align: center;
+}
+
+.reclamacoes-laboratorio {
+    padding: 50px;
+}
+
+.reclamacoes-laboratorio h3, p {
+    text-align: center;
+}
+
+.manutencao-user {
+    padding: 50px;
+}
+
+.manutencao-user h3, p {
+    text-align: center;
+}
+
+
+.graficos-circulo {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+@media screen and (max-width: 720px) {
+    .chart-container {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+    
+    .graficos-circulo {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+}

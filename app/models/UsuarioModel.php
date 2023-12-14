@@ -235,21 +235,30 @@ class UsuarioModel extends Connection
         // return true;
     }
 
-    public function removerPermissao($codUsuario)
-    {
+    public function asyncUser($codUsuario) {
         $conn = $this->connect();
-    
-        $sql = "UPDATE usuario SET nivel_acesso_fk = 4 WHERE codusuario = :codUsuario";
+
+        $sql = "SELECT login FROM usuario WHERE codusuario = :codUsuario";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':codUsuario', $codUsuario);
         $stmt->execute();
+        $loginUser = $stmt->fetchAll();
 
+        return($loginUser);
+    }
+
+    public function removerPermissao($codUsuario, $login, $codAcesso)
+    {
+        $conn = $this->connect();
+    
+        $sql = "UPDATE usuario SET nivel_acesso_fk = :codAcesso WHERE codusuario = :codUsuario OR login = :login";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':codAcesso', $codAcesso);
+        $stmt->bindParam(':codUsuario', $codUsuario);
+        $stmt->bindParam(':login', $login);
+        $stmt->execute();
+    
         return true;
     }
     
-
-    public function adicionarPermissao($codUsuario)
-    {
-
-    }
 }

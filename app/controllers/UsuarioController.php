@@ -83,13 +83,34 @@ class UsuarioController
         exit;
     }
 
+    public function getLogin() {
+        $usuarioModel = new UsuarioModel();
+
+        $codUsuario = $_GET['codUsuario'];
+
+        $login = $usuarioModel->asyncUser($codUsuario);
+        
+        header('Content-Type: application/json');
+
+        echo  json_encode($login);
+    }
+
     public function removerAcesso() {
         session_start();
-        $codUsuario = $_POST['codusuario'];
+        $codUsuario = $_POST['usuario'];
+        $codAcesso = $_POST['nivel-acesso'];
+        $login = $_POST['login'];
         $usuarioModel = new UsuarioModel();
-    
+
+        echo $codUsuario;
+        ?><br><?php
+        echo $login;
+        ?><br><?php
+        echo $codAcesso;
+
+        $usuarioModel->removerPermissao($codUsuario, $login, $codAcesso);
         try {
-            if ($usuarioModel->removerPermissao($codUsuario)) {
+            if ($usuarioModel) {
                 $_SESSION['success_message'] = 'Permissão removida com sucesso.';
             } else {
                 $_SESSION['error_message'] = 'Houve um erro ao remover a permissão.';

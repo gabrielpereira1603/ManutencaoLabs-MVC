@@ -1,0 +1,36 @@
+.text {
+    text-align: center;
+    padding-top: 50px;
+}
+
+.form-group {
+    margin: 50px;
+    align-items: center;
+    width: 50%;
+
+}
+
+.form-select {
+    margin-bottom: 10px;
+}
+
+.btn-criar button {
+    display: flex;
+    justify-content: end;
+}
+
+.manutencao-labs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-width: 1026px) {
+    .form-group {
+        margin: 50px;
+        align-items: center;
+        width: 90%;
+    
+    }
+}
