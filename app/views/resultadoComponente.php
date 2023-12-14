@@ -12,6 +12,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="config/node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js"></script>
+    <script src="config/js/alerts.js"></script>
 </head>
 <body>
     <?php
@@ -20,8 +21,8 @@
 
     <?php
         // Verifique se existem dados na sessão
-        if (isset($_SESSION['resultado_manutencao'])) {
-            $dados = $_SESSION['resultado_manutencao'];
+        if (isset($_SESSION['resultado_componentes'])) {
+            $dados = $_SESSION['resultado_componentes'];
 
             // Verifica se há dados antes de tentar exibir
             if (!empty($dados)) { ?>
@@ -29,37 +30,28 @@
                 <table id="tabela-manutencao" class="display">
                     <thead>
                         <tr>
-                            <th>Data/Hora Manutenção</th>
-                            <th>Descrição Manutenção</th>
-                            <th>Nome Usuário</th>
-                            <th>Login</th>
-                            <th>Nível de Acesso</th>
-                            <th>Status Reclamação</th>
-                            <th>Patrimônio Computador</th>
-                            <th>Número Laboratório</th>
-                            <th>Descrição Reclamação</th>
-                            <th>Data/Hora Reclamação</th>
+                            <th>ID</th>
+                            <th>Nome do Aluno</th>
+                            <th>RM do Aluno</th>
+                            <th>Data/Hora da Reclamação</th>
+                            <th>Número do Laboratório</th>
                             <th>Componentes</th>
+                            <th>Descrição</th>
                         </tr>
                     </thead>
                     <tbody>
-                
-                    <?php foreach ($dados as $manutencao) {
-                        echo '<tr>
-                                <td>' . $manutencao['datahora_manutencao'] . '</td>
-                                <td>' . $manutencao['descricao_manutencao'] . '</td>
-                                <td>' . $manutencao['nome_usuario'] . '</td>
-                                <td>' . $manutencao['login'] . '</td>
-                                <td>' . $manutencao['nivel_acesso_fk'] . '</td>
-                                <td>' . $manutencao['status_reclamacao'] . '</td>
-                                <td>' . $manutencao['patrimonio'] . '</td>
-                                <td>' . $manutencao['numerolaboratorio'] . '</td>
-                                <td>' . $manutencao['descricao_reclamacao'] . '</td>
-                                <td>' . $manutencao['datahora_reclamacao'] . '</td>
-                                <td>' . $manutencao['componentes'] . '</td>
+                        <?php foreach ($dados as $componente) {
+                            echo '
+                            <tr>
+                                <td>' . $componente['codreclamacao'] . '</td>
+                                <td>' . $componente['nome_usuario'] . '</td>
+                                <td>' . $componente['login'] . '</td>
+                                <td>' . $componente['datahora_reclamacao'] . '</td>
+                                <td>' . $componente['numerolaboratorio'] . '</td>
+                                <td>' . $componente['componentes'] . '</td>
+                                <td>' . $componente['descricao'] . '</td>
                             </tr>';
-                    }?>
-                    
+                        }?>
                     </tbody>
                 </table>
                 <div class="d-grid gap-2 mt-4">
@@ -76,7 +68,6 @@
             $("#tabela-manutencao").DataTable();
         });
     </script>
-
     <script src="config/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

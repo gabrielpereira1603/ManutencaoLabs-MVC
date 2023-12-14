@@ -30,7 +30,7 @@
                                 <ul class="dropdown-menu" aria-labelledby="relatoriosDropdown">
                                     <li><a class="dropdown-item" href="?router=Site/relatorioManutencao">Relatório De Manutenções</a></li>
                                     <li><hr class="dropdown-divider"></li>
-                                    <li><a class="dropdown-item" href="relatorio-componente.php">Relatório De Componentes</a></li>
+                                    <li><a class="dropdown-item" href="?router=Site/relatorioComponente">Relatório De Componentes</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item dropdown">

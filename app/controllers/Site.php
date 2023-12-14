@@ -207,4 +207,38 @@ class Site extends Crud
         $buscarComponentes = $this->getComponentes();
         require_once __DIR__ . '/../views/editarReclamacao.php';
     }
+
+    public function relatorioComponente() {
+        session_start();
+        
+        if (!isset($_SESSION['autenticado_admin']) || $_SESSION['autenticado_admin'] !== true) {
+            $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';            
+            header("Location:?router=Site/loginAdm");
+            exit();
+        } else if (!isset($_SESSION['codnivel_acesso']) || ($_SESSION['codnivel_acesso'] == 2) || ($_SESSION['codnivel_acesso'] == 4)) {
+            $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';           
+            header("Location:?router=Site/loginAluno");
+            exit();
+        }
+
+        $buscarLab = $this->buscarLaboratorio();
+        $buscarUsuario = $this->getUsuarios();
+        $buscarComponentes = $this->getComponentes();
+    
+        require_once __DIR__ . '/../views/relatorioComponente.php';
+    }
+
+    public function resultadoComponente() {
+        session_start();
+        if (!isset($_SESSION['autenticado_admin']) || $_SESSION['autenticado_admin'] !== true) {
+            $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';            
+            header("Location:?router=Site/loginAdm");
+            exit();
+        } else if (!isset($_SESSION['codnivel_acesso']) || ($_SESSION['codnivel_acesso'] == 1) || ($_SESSION['codnivel_acesso'] == 4)) {
+            $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';           
+            header("Location:?router=Site/loginAluno");
+            exit();
+        }
+        require_once __DIR__ . '/../views/resultadoComponente.php';
+    }
 }

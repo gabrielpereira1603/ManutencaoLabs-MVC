@@ -47,5 +47,25 @@ class RelatorioController extends RelatorioModel
         header("Location: ?router=Site/resultadoManutencao");
     }
     
+    public function relatorioComponente() {
+        session_start();
+        $componentesSelecionados = isset($_POST['componente']) ? $_POST['componente'] : [];
+        $codLaboratorio = $_POST['laboratorio'];
+        $dataI = $_POST['dataInicio'];
+        $dataF = $_POST['dataFim'];
+
+        $dataInicio = date('Y-m-d', strtotime($_POST['dataInicio']));
+        $dataFim = date('Y-m-d', strtotime($_POST['dataFim']));
+    
+        // Imprima a consulta SQL para depuração
+        $componentes = implode(', ', $componentesSelecionados);
+        
+        $relatorioModel = new RelatorioModel();
+        $resultadoComponente = $relatorioModel->Componente($componentes, $codLaboratorio, $dataInicio, $dataFim);
+    
+    
+        $_SESSION['resultado_componentes'] = $resultadoComponente;
+        header("Location: ?router=Site/resultadoComponente");
+    }
     
 }
