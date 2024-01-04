@@ -35,14 +35,6 @@
             <h1>Registrar Novo Usuário</h1>
         </div>
 
-        <div id="loading-indicator" style="display: none;">
-            <p>Enviando email...</p>
-            <div class="spinner-border" role="status">
-                <span class="visually-hidden">Carregando...</span>
-            </div>
-        </div>
-
-
         <form action="?router=UsuarioController/CriarNovoUsuario" method="POST" class="form-group">
 
             <div class="novo-user">

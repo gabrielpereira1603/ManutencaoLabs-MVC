@@ -52,8 +52,6 @@
                                 echo "<div class='row'>";
                                 $contador = 0; // Inicializa o contador
                                 $linha = 1; // Inicializa o número da linha
-
-                                
                                 foreach ($laboratorio['computadores'] as $pc) {
                                     
                                     if ($contador == 0) {
@@ -61,7 +59,6 @@
                                         echo "<div class='linha'>Fileira " . $linha . "</div>";
                                         $linha++;
                                     }
-
                                         // Verifique o nível de acesso do usuário
                                     if ($_SESSION['codnivel_acesso'] == 1 && $pc['codsituacao_fk'] > 1) {
                                         // Usuário com nível de acesso 3, defina um estilo para desativar o clique e tornar meio opaco
@@ -70,7 +67,6 @@
                                         // Usuário com outros níveis de acesso
                                         $styles = ''; // Não desabilite o clique e não altere a opacidade
                                     }
-
                                     // Lógica para definir a cor com base na situação do computador
                                     $cor = '';
                                     switch ($pc['codsituacao_fk']) {
@@ -84,7 +80,6 @@
                                             $cor = "background-color: #B22222;"; // Indisponível (vermelho)
                                             break;
                                     }
-                                    
                                     // Exibe o computador com a cor e estilos definidos
                                     ?>
                                         <div class='col-lg-1 col-6'>
@@ -121,19 +116,14 @@
                                     }
                                     
                                 }
-                                
                                 // Fecha a div da última linha
                                 echo "</div>";
-
                             ?>
                         </div>
                     </div>
                 </div>
             </div>
         <?php endforeach; ?>
-
-
-
         <script src="config/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>

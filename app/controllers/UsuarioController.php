@@ -102,12 +102,6 @@ class UsuarioController
         $login = $_POST['login'];
         $usuarioModel = new UsuarioModel();
 
-        echo $codUsuario;
-        ?><br><?php
-        echo $login;
-        ?><br><?php
-        echo $codAcesso;
-
         $usuarioModel->removerPermissao($codUsuario, $login, $codAcesso);
         try {
             if ($usuarioModel) {
@@ -116,11 +110,24 @@ class UsuarioController
                 $_SESSION['error_message'] = 'Houve um erro ao remover a permissão.';
             }
         } catch (\Exception $e) {
-            // Se ocorrer um erro na model, captura a exceção e armazena a mensagem de erro
             $_SESSION['error_message'] = $e->getMessage();
         }
     
         header("Location:?router=Site/permissoes");
+    }
+
+    public function editUser() {
+        session_start();
+        $nome_user = isset($_POST['nome']) ? $_POST['nome'] : null;
+        $email_user = isset($_POST['email']) ? $_POST['email'] : null;
+        $login_user = isset($_POST['login']) ? $_POST['login'] : null;
+    
+        $usuarioModel = new UsuarioModel();
+    
+
+        $usuarioModel->alterarUsuario($nome_user, $email_user, $login_user);
+
+        var_dump($nome_user, $email_user, $login_user);
     }
     
     

@@ -241,4 +241,20 @@ class Site extends Crud
         }
         require_once __DIR__ . '/../views/resultadoComponente.php';
     }
+
+    public function alterarUsuario() {
+        session_start();
+        if (!isset($_SESSION['autenticado_admin']) || $_SESSION['autenticado_admin'] !== true) {
+            $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';            
+            header("Location:?router=Site/loginAdm");
+            exit();
+        } else if (!isset($_SESSION['codnivel_acesso']) || ($_SESSION['codnivel_acesso'] == 1) || ($_SESSION['codnivel_acesso'] == 4)) {
+            $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';           
+            header("Location:?router=Site/loginAluno");
+            exit();
+        }
+        
+        $niveisAcesso = $this->getNiveisAcesso();
+        require_once __DIR__ . '/../views/alterarUsuario.php';
+    }
 }

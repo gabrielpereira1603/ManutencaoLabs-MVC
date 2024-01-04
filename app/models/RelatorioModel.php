@@ -151,44 +151,41 @@ class RelatorioModel extends Connection
         $conn = $this->connect();
     
         $sql = "SELECT 
-                    r.*, 
-                    u.nome_usuario, 
-                    u.login, 
-                    l.numerolaboratorio, 
-                    GROUP_CONCAT(co.nome_componente) AS componentes
-                FROM 
-                    reclamacao r
-                INNER JOIN 
-                    reclamacao_componente rc ON r.codreclamacao = rc.codreclamacao_fk
-                INNER JOIN 
-                    usuario u ON r.codusuario_fk = u.codusuario
-                INNER JOIN 
-                    laboratorio l ON r.codlaboratorio_fk = l.codlaboratorio
-                INNER JOIN 
-                    componente co ON rc.codcomponente_fk = co.codcomponente
-                WHERE 
-                    rc.codcomponente_fk IN ($componentes)
-                    AND r.datahora_reclamacao >= :dataInicio
-                    AND r.datahora_reclamacao <= :dataFim";
+                r.*, 
+                u.nome_usuario, 
+                u.login, 
+                l.numerolaboratorio, 
+                GROUP_CONCAT(co.nome_componente) AS componentes
+            FROM 
+                reclamacao r
+            INNER JOIN 
+                reclamacao_componente rc ON r.codreclamacao = rc.codreclamacao_fk
+            INNER JOIN 
+                usuario u ON r.codusuario_fk = u.codusuario
+            INNER JOIN 
+                laboratorio l ON r.codlaboratorio_fk = l.codlaboratorio
+            INNER JOIN 
+                componente co ON rc.codcomponente_fk = co.codcomponente
+            WHERE 
+                rc.codcomponente_fk IN ($componentes)
+                AND r.datahora_reclamacao >= :dataInicio
+                AND r.datahora_reclamacao <= :dataFim";
     
-        // Adicione a condição para filtrar pelo laboratório, se não for "Todos os laboratórios"
         if ($codLaboratorio !== null && $codLaboratorio != -1) {
             $sql .= " AND r.codlaboratorio_fk = :codLaboratorio";
         }
     
-        $sql .= " GROUP BY 
-                    r.codreclamacao, 
-                    u.nome_usuario, 
-                    u.login, 
-                    l.numerolaboratorio";
+        $sql .= "GROUP BY 
+        r.codreclamacao, 
+        u.nome_usuario, 
+        u.login, 
+        l.numerolaboratorio";
     
         $stmt = $conn->prepare($sql);
     
-        // Bind dos parâmetros
         $stmt->bindParam(':dataInicio', $dataInicio);
         $stmt->bindParam(':dataFim', $dataFim);
     
-        // Bind do parâmetro do laboratório, se não for "Todos os laboratórios"
         if ($codLaboratorio !== null && $codLaboratorio != -1) {
             $stmt->bindParam(':codLaboratorio', $codLaboratorio);
         }

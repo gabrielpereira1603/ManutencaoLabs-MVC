@@ -40,7 +40,7 @@
             <fieldset>
                 <legend>Selecione o Laboratório</legend>
                 <select class="form-select" aria-label="Default select example" name="laboratorio" id="laboratorio">
-                    <option value="">Selecione um laboratórios</option>
+                    <option value="">Selecionar um laboratório</option>
                     <option value="-1">Todos os laboratórios</option>
                     <?php foreach ($buscarLab as $laboratorio): ?>
                         <option value="<?php echo $laboratorio['codlaboratorio']; ?>"><?php echo $laboratorio['numerolaboratorio']; ?></option>

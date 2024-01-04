@@ -41,7 +41,6 @@ class RelatorioController extends RelatorioModel
             $resultado = $relatorioModel->Manutencao($usuarioadmin, $codLaboratorio, $codComputador, $dataInicio, $dataFim);
         }
 
-        // Armazene os dados na sessão
         $_SESSION['resultado_manutencao'] = $resultado;
 
         header("Location: ?router=Site/resultadoManutencao");
@@ -57,12 +56,10 @@ class RelatorioController extends RelatorioModel
         $dataInicio = date('Y-m-d', strtotime($_POST['dataInicio']));
         $dataFim = date('Y-m-d', strtotime($_POST['dataFim']));
     
-        // Imprima a consulta SQL para depuração
         $componentes = implode(', ', $componentesSelecionados);
         
         $relatorioModel = new RelatorioModel();
         $resultadoComponente = $relatorioModel->Componente($componentes, $codLaboratorio, $dataInicio, $dataFim);
-    
     
         $_SESSION['resultado_componentes'] = $resultadoComponente;
         header("Location: ?router=Site/resultadoComponente");

@@ -21,7 +21,6 @@
         </h1>
 
         <form action="?router=RelatorioController/relatorioManutencao" method="POST" class="form-group">
-
             <fieldset>
                 <legend>Selecione o Usuário</legend>
                 <select class="form-select" aria-label="Default select example" name="usuarioadmin">
@@ -33,21 +32,17 @@
 
             </fieldset>
 
-                
-            <!-- Selecione o Laboratório -->
             <fieldset>
                 <legend>Selecione o Laboratório</legend>
                 <select class="form-select" aria-label="Default select example" name="laboratorio" id="laboratorio">
-                    <option value="">Selecione um laboratórios</option>
+                    <option value="">Selecionar um laboratório</option>
                     <option value="-1">Todos os laboratórios</option>
                     <?php foreach ($buscarLab as $laboratorio): ?>
                         <option value="<?php echo $laboratorio['codlaboratorio']; ?>"><?php echo $laboratorio['numerolaboratorio']; ?></option>
                     <?php endforeach; ?>
                 </select>
-            </fieldset>`
+            </fieldset>
             
-
-            <!-- Selecione o Computador -->
             <fieldset>
                 <legend>Selecione o Computador</legend>
                 <select class="form-select" aria-label="Default select example" name="computador" id="computador">
@@ -67,7 +62,7 @@
                             var selectComputador = document.getElementById("computador");
                             selectComputador.innerHTML = "<option value='-1' selected>Todos os computadores</option>";
                         });
-                    } else {
+                    } else if(selectedLaboratorio >= 1) {
                         // Caso contrário, carregue os computadores do laboratório selecionado
                         fetch('?router=RelatorioController/getLaboratorio&codLaboratorio=' + selectedLaboratorio)
                         .then(response => response.json())
@@ -82,6 +77,15 @@
                                 selectComputador.appendChild(option);
 
                             });
+                        });
+                    } else {
+                        //Caso usuario nao tenha selecionado nenhum laboratório
+                        fetch('?router=RelatorioController/getLaboratorio&codLaboratorio=' + selectedLaboratorio)
+                        .then(response => response.json())
+                        .then(jsonResponse => {
+                            var selectComputador = document.getElementById("computador");
+                            selectComputador.disabled = false;
+                            selectComputador.innerHTML = "<option value=''>Selecione um laboratório primeiro</option>";
                         });
                     }
                 });
@@ -111,7 +115,6 @@
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                 <button class="btn btn-primary"  style="margin-top: 20px;" type="submit" name="criar">Gerar Relatório</button>
             </div>
-
         </form>
 
         <script src="config/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

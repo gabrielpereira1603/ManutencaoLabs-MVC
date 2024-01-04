@@ -15,7 +15,6 @@
     <body style="background-color: #d8e0dd;">
 
         <?php
-            session_start();
             include("cabecario.php");  
         ?>
 

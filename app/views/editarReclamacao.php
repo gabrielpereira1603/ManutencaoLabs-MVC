@@ -16,7 +16,6 @@
         <?php
             include("cabecario.php");
             $dados = $_SESSION['resultado_reclamacao'];
-            var_dump($dados);
         ?>
 
         <div class="accordion" id="accordionExample">

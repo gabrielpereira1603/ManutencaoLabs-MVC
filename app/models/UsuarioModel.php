@@ -17,7 +17,19 @@ class UsuarioModel extends Connection
         $conn = $this->connect();
 
         try {
-            $stmt = $conn->prepare('SELECT codusuario, senha, nome_usuario, nivel_acesso_fk FROM usuario WHERE login = :login');
+            $stmt = $conn->prepare('SELECT 
+            usuario.codusuario, 
+            usuario.senha, 
+            usuario.nome_usuario, 
+            usuario.email_usuario, 
+            usuario.nivel_acesso_fk, 
+            nivel_acesso.tipo_acesso
+            FROM 
+                usuario 
+            INNER JOIN 
+                nivel_acesso ON usuario.nivel_acesso_fk = nivel_acesso.codnivel_acesso
+            WHERE 
+            usuario.login = :login');
 
             if ($stmt === false) {
                 throw new \Exception('Houve um erro na preparação da consulta SQL');
@@ -31,9 +43,12 @@ class UsuarioModel extends Connection
                 if (password_verify($senha, $usuario['senha'])) {
                     // Armazene o codnivel_acesso em uma variável de sessão
                     $_SESSION['autenticado_admin'] = true;
+                    $_SESSION['login'] = $login;
                     $_SESSION['nomeadmin'] = $usuario['nome_usuario'];
+                    $_SESSION['email_usuario'] = $usuario['email_usuario'];
                     $_SESSION['codusuario'] = $usuario['codusuario'];
                     $_SESSION['codnivel_acesso'] = $usuario['nivel_acesso_fk'];
+                    $_SESSION['tipo_acesso'] = $usuario['tipo_acesso'];
                     return true;
                 }
             }
@@ -260,5 +275,10 @@ class UsuarioModel extends Connection
     
         return true;
     }
-    
+
+    public function alterarUsuario($nome_user, $email_user, $login_user) {
+        $conn = $this->connect();
+
+    }
 }
+    

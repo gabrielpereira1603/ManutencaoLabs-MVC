@@ -38,7 +38,7 @@
                                     Controle De Usuário
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="controleUsuarioDropdown">
-                                    <li><a class="dropdown-item" href="editar-useradmin.php">Alterar Usuário</a></li>
+                                    <li><a class="dropdown-item" href="?router=Site/alterarUsuario">Alterar Usuário</a></li>
                                     <li><a class="dropdown-item" href="?router=Site/permissoes">Gerenciar Permissões</a></li>
                                     <li><a class="dropdown-item" href="?router=Site/addUsuario">Adicionar Novo Usuário</a></li>
                                     <li><hr class="dropdown-divider"></li>
