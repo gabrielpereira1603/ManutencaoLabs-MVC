@@ -4,9 +4,9 @@ namespace app\models;
 
 abstract class Connection
 {
-    private $bdname = 'mysql:host=localhost;dbname=manutencaolabs';
+    private $bdname = 'mysql:host=roundhouse.proxy.rlwy.net;dbname=railway';
     private $user = 'root';
-    private $pass = 'root';
+    private $pass = 'fCaecg2A3eFHHDghbeE-fDAA51-BABBG';
 
     protected function connect()
     {
