@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
         'name' => 'pereira/projeto-tcc',
-        'pretty_version' => '1.0.0+no-version-set',
-        'version' => '1.0.0.0',
-        'reference' => NULL,
+        'pretty_version' => 'dev-main',
+        'version' => 'dev-main',
+        'reference' => 'e28d842e452e963aeff1749ede8e06d745d1371d',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -11,9 +11,9 @@
     ),
     'versions' => array(
         'pereira/projeto-tcc' => array(
-            'pretty_version' => '1.0.0+no-version-set',
-            'version' => '1.0.0.0',
-            'reference' => NULL,
+            'pretty_version' => 'dev-main',
+            'version' => 'dev-main',
+            'reference' => 'e28d842e452e963aeff1749ede8e06d745d1371d',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
