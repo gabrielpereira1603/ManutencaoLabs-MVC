@@ -16,6 +16,8 @@ main{
     flex-direction: column;
     overflow: hidden;
 }
+
+
 .accordion{
     background-color: #f8f9fa;
 }
@@ -96,9 +98,10 @@ main{
     grid-template-columns: 50% 20% 10% ;
 }
 
-.btn {
+.accordion .btn {
     grid-row: 5/5;
     grid-column: 5/5;
+    border: 1px black solid !important;
 }
 
 .p-2 {

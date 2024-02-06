@@ -267,7 +267,7 @@ class Crud extends Connection
         $conn = $this->connect();
         try {
             $stmt = $conn->prepare("SELECT 
-            usuario.nome_usuario AS nomeadmin,
+            usuario.nome_usuario,
             COUNT(manutencao.codmanutencao) AS total_manutencoes
             FROM 
                 usuario

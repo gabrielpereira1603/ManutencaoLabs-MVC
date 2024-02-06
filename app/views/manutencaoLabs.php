@@ -8,7 +8,10 @@
         <link rel="stylesheet" href="config/css/manutencaoLabs.css">
         <link rel="stylesheet" href="config/css/cabecario.css">
         <link rel="stylesheet" href="config/node_modules/bootstrap/dist/css/bootstrap.min.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="config/node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
         <script src="config/js/alerts.js"></script>
+        <script src="config/js/manutencaoLabs.js"></script>
     </head>
     <body>
         <?php
@@ -35,7 +38,7 @@
         </div>
 
         <div class="manutencao-labs">
-            <form action="?router=ManutencaoLabsController/alterLabs" method="POST" class="form-group">
+            <form action="?router=ManutencaoLabsController/alterLabs" method="POST" class="form-group" id="form-manutencao">
                 <fieldset>
                     <legend>Inserir/Excluir Laboratório</legend>
                     <select class="form-select" aria-label="Default select example" id="nomelaboratorio" name="laboratorio">
@@ -47,15 +50,15 @@
                         <?php endforeach; ?>
                     </select>
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="nomeLaboratorio" name="nomeLaboratorio" placeholder="Selecione o Nome do Laboratorio">
+                        <input type="text" class="form-control" id="nomeLaboratorio" name="nomeLaboratorio" placeholder="Selecione o Nome do Laboratorio" required>
                         <label for="nomeLaboratorio">Selecione o Nome do Laboratório</label>
                     </div>
-
-                    <input type="hidden" name="acao" id="acao" value="">
                 </fieldset>
+                <input type="hidden" name="acao" id="acao-labs" value="">
+
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-danger" type="submit" onclick="setAcao('excluir')">Excluir Laboratório</button>
-                    <button class="btn btn-primary" type="submit" onclick="setAcao('criar')">Criar Laboratório</button>
+                    <button class="btn btn-danger" type="submit" onclick="setAcaoLab('excluir')">Excluir Componente</button>
+                    <button class="btn btn-primary" type="submit" onclick="setAcaoLab('criar')">Criar Componente</button>
                 </div>
             </form>
 
@@ -72,8 +75,8 @@
                     }
                 });
 
-                function setAcao(acao) {
-                    document.getElementById('acao').value = acao;
+                function setAcaoLab(acao) {
+                    document.getElementById('acao-labs').value = acao;
                 }
             </script>
 
@@ -92,14 +95,14 @@
                         </select>
 
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="patrimonio" name="patrimonio" placeholder="Selecionar patrimonio do Computador">
+                            <input type="text" class="form-control" id="patrimonio" name="patrimonio" placeholder="Selecionar patrimonio do Computador" required>
                             <label for="patrimonio">Patrimonio Do Computador</label>
                         </div>
                     <input type="hidden" name="acao" id="acao-pc" value="">
                 </fieldset>
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button class="btn btn-danger" type="submit" onclick="setAcao('excluir')">Excluir Computador</button>
-                    <button class="btn btn-primary" type="submit" onclick="setAcao('criar')">Criar Computador</button>
+                    <button class="btn btn-danger" type="submit" onclick="setAcaoPc('excluir')">Excluir Computador</button>
+                    <button class="btn btn-primary" type="submit" onclick="setAcaoPc('criar')">Criar Computador</button>
                 </div>
             </form>
 
@@ -132,7 +135,7 @@
                     });
                 });
 
-                function setAcao(acao) {
+                function setAcaoPc(acao) {
                     document.getElementById('acao-pc').value = acao;
                 }
             </script>
@@ -147,8 +150,8 @@
                         <?php endforeach; ?>
                     </select>
 
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="nome-componente" name="nome-componente" placeholder="Nome Componente">
+                    <div class="form-floating mb-3" id="inputs-componentes">
+                        <input type="text" class="form-control" id="nome-componente" name="nome-componente" placeholder="Nome Componente" required>
                         <label for="floatingInput">Nome Componente</label>
                     </div>
                     <input type="hidden" name="acao" id="acao-comp" value="">
@@ -180,7 +183,7 @@
                         }
                     }
                 });
-
+                
                 function setAcao(acao) {
                     document.getElementById('acao-comp').value = acao;
                 }

@@ -49,14 +49,14 @@
                             <!-- Conteúdo do laboratório -->
                             <?php
                                 // Inicia a primeira linha
-                                echo "<div class='row'>";
+                                echo "<div class='row d-flex justify-content-center '>";
                                 $contador = 0; // Inicializa o contador
                                 $linha = 1; // Inicializa o número da linha
                                 foreach ($laboratorio['computadores'] as $pc) {
                                     
                                     if ($contador == 0) {
                                         // Exibe a div com o número da linha quando o contador for zero
-                                        echo "<div class='linha'>Fileira " . $linha . "</div>";
+                                        echo "<div class='linha d-flex justify-content-center mb-3'>Fileira " . $linha . "</div>";
                                         $linha++;
                                     }
                                         // Verifique o nível de acesso do usuário
@@ -71,13 +71,13 @@
                                     $cor = '';
                                     switch ($pc['codsituacao_fk']) {
                                         case 1:
-                                            $cor = "background-color: #228B22;"; // Disponível (verde)
+                                            $button_class = "btn-success"; // Disponível (verde)
                                             break;
                                         case 2:
-                                            $cor = "background-color: #FFFF33;"; // Manutenção (amarelo)
+                                            $button_class = "btn-warning"; // Manutenção (amarelo)
                                             break;
                                         case 3:
-                                            $cor = "background-color: #B22222;"; // Indisponível (vermelho)
+                                            $button_class = "btn-danger"; // Indisponível (vermelho)
                                             break;
                                     }
                                     // Exibe o computador com a cor e estilos definidos
@@ -91,15 +91,15 @@
                                                 <input type="hidden" name="numerolaboratorio" value="<?php echo $pc['numerolaboratorio']; ?>">
                                                 
                                                 <?php if ($pc['codsituacao_fk'] > 1 && $_SESSION['codnivel_acesso'] <= 1): ?>
-                                                    <button type="button" class="computador-button">
-                                                        <div id="pcs" style='display: flex; align-items: center; justify-content: center; text-align: center; color: black; font-weight: 600; font-size: 24px; width: 80px; height: 80px; <?php echo $cor . ' ' . $styles; ?>'>
-                                                            <p id="pcs-p"><?php echo $pc['patrimonio']; ?></p>
+                                                    <button type="button" class="btn btn-primary <?php echo $button_class; ?> computador-button">
+                                                        <div class="d-flex justify-content-center align-items-center" style="width: 80px; height: 80px;">
+                                                            <p id="pcs-p" class="m-0"><?php echo $pc['patrimonio']; ?></p>
                                                         </div>
                                                     </button>
                                                 <?php else: ?>
-                                                    <button type="submit" class="computador-button">
-                                                        <div id="pcs" style='display: flex; align-items: center; justify-content: center; text-align: center; color: black; font-weight: 600; font-size: 24px; width: 80px; height: 80px; <?php echo $cor . ' ' . $styles; ?>'>
-                                                            <p id="pcs-p"><?php echo $pc['patrimonio']; ?></p>
+                                                    <button type="submit" class="btn btn-primary <?php echo $button_class; ?> computador-button">
+                                                        <div class="d-flex justify-content-center align-items-center" style="width: 80px; height: 80px;">
+                                                            <p id="pcs-p" class="m-0"><?php echo $pc['patrimonio']; ?></p>
                                                         </div>
                                                     </button>
                                                 <?php endif; ?>
@@ -111,7 +111,8 @@
                                     // Verifica se o contador chegou a 10
                                     if ($contador == 10) {
                                         // Fecha a div da linha atual e inicia uma nova linha
-                                        echo "</div><div class='row'>";
+                                        echo "</div><div class='row d-flex justify-content-center'>";
+                                        echo '<hr class="fileira-line">';
                                         $contador = 0; // Zera o contador
                                     }
                                     

@@ -11,7 +11,9 @@
     "minimum-stability": "stable",
     "require": {
         "php":">=7.2",
-        "phpmailer/phpmailer": "^6.8" 
+        "phpmailer/phpmailer": "^6.8" ,
+        "tecnickcom/tcpdf": "^6.3",
+        "composer/composer": "^2.6"
     },
     "autoload": {
         "psr-4": {

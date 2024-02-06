@@ -56,9 +56,10 @@
                                                 <input class="form-check-input" type="checkbox" name="componente[]" value="<?php echo $componente['codcomponente'] ?>" id="<?php echo $componente['codcomponente'] ?>"
                                                     <?php
                                                         // Verifica se o componente está na lista de componentes da model
-                                                        if (in_array($componente['nome_componente'], explode(',', $reclamacao['componentes']))) {
+                                                        if (!empty($reclamacao['componentes']) && in_array($componente['nome_componente'], explode(',', $reclamacao['componentes']))) {
                                                             echo 'checked'; // Marca o checkbox se o componente estiver na lista
                                                         }
+
                                                     ?>
                                                 >
                                                 <label class="form-check-label" for="<?php echo $componente['codcomponente'] ?>">
