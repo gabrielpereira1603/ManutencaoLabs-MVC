@@ -62,9 +62,16 @@
                     
                     </tbody>
                 </table>
-                <div class="d-grid gap-2 mt-4">
-                    <button id="gerarPDF" class="btn btn-primary" type="button">Gerar Relatório em PDF</button>
-                </div>
+                <form action="?router=RelatorioController/baixarPDF" method="post">
+                    <input type="hidden" name="dados_manutencao" value="<?php echo htmlspecialchars(json_encode($dados)); ?>">
+
+                    <div class="d-grid gap-2 mt-4">
+                        <button id="gerarPDF" class="btn btn-primary" type="submit">Gerar Relatório em PDF</button>
+                    </div>
+                </form>    
+                <?php
+                    // var_dump();
+                ?>
             </div>
     <?php
             }

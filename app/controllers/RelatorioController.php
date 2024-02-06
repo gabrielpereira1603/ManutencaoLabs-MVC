@@ -3,6 +3,9 @@
 namespace app\controllers;
 
 use app\models\RelatorioModel;
+use app\controllers\TCPDF;
+
+require_once('vendor\tecnickcom\tcpdf\tcpdf.php');
 
 class RelatorioController extends RelatorioModel
 {
@@ -64,5 +67,16 @@ class RelatorioController extends RelatorioModel
         $_SESSION['resultado_componentes'] = $resultadoComponente;
         header("Location: ?router=Site/resultadoComponente");
     }
+
+public function baixarPDF() 
+{
+    session_start();
+    $dados = json_decode($_POST['dados_manutencao']);    
+
+    // Crie uma instância do TCPDF
+    $pdf = new \TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+
+}
+
     
 }
