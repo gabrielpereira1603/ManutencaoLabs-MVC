@@ -132,7 +132,7 @@
 
                     // Processa os resultados da consulta
                     foreach ($dashboard_relatorioUser as $rowManutencoes) {
-                        $labels_manutencoes[] = $rowManutencoes['nomeadmin'];
+                        $labels_manutencoes[] = $rowManutencoes['nome_usuario'];
                         $data_manutencoes[] = $rowManutencoes['total_manutencoes'];
                         // Gerar uma cor aleatória para cada fatia do gráfico
                         $colors_manutencoes[] = sprintf('#%06X', mt_rand(0, 0xFFFFFF));

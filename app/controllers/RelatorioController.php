@@ -74,48 +74,9 @@ class RelatorioController extends RelatorioModel
         session_start();
         // Verifique se 'dados_manutencao' está definido no $_POST
         if(isset($_POST['dados_manutencao'])) {
-            $data = [
-                ['2024-02-06 14:37:51', 'manutencao concluida com sucesso', 'Nome Aleatório', '123', 3, 'concluída', '01', 'Laboratório 1', 'teste\r\n', '2024-02-06 13:13:46', 'Mouse']
-            ];
-           
-            //  print_r($dados);
-            // Cria um novo documento PDF
-            $pdf = new \MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-        
-            // Define as informações do documento
-            $pdf->SetCreator(PDF_CREATOR);
-            $pdf->SetAuthor('Nicola Asuni');
-            $pdf->SetTitle('Relatório de Manutenção');
-            $pdf->SetSubject('Relatório de Manutenção');
-            $pdf->SetKeywords('TCPDF, PDF, example, test, guide');
-        
-            // Define dados do cabeçalho
-            $pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, 'Relatório de Manutenção', 'Relatório de Manutenção');
-        
-            // Define fontes, margens e outras configurações
-            $pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-            $pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
-            $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
-            $pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-            $pdf->SetHeaderMargin(PDF_MARGIN_HEADER);
-            $pdf->SetFooterMargin(PDF_MARGIN_FOOTER);
-            $pdf->SetAutoPageBreak(TRUE, PDF_MARGIN_BOTTOM);
-            $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
-        
-            // Adiciona uma página
-            $pdf->AddPage();
-        
-            // Define os títulos das colunas
-            $header = array('Data/Hora Manutenção', 'Descrição Manutenção', 'Nome Usuário', 'Login', 'Nível de Acesso', 'Status Reclamação', 'Patrimônio Computador', 'Número Laboratório', 'Descrição Reclamação', 'Data/Hora Reclamação', 'Componentes');
-        
-            // Cria a tabela colorida com os dados
-            $pdf->ColoredTable($header, $data);
-        
-            // Fecha e gera o PDF para download
-            $pdf->Output('relatorio_manutencao.pdf', 'D');
-        } else {
-            // Se 'dados_manutencao' não estiver definido no $_POST, faça o tratamento apropriado
-            echo "Dados de manutenção não foram recebidos.";
-         }
+            $data = $_POST['dados_manutencao'];
+        } else {    
+            
+        }
     }
 }
