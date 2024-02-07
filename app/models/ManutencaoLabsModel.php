@@ -2,9 +2,11 @@
 
 namespace app\models;
 
-class ManutencaoLabsModel extends Connection {
+class ManutencaoLabsModel extends Connection
+{
 
-    public function BuscarPc($codLaboratorio) {
+    public function BuscarPc($codLaboratorio)
+    {
         $conn = $this->connect();
 
         // Realize a consulta SQL para buscar os dados
@@ -18,7 +20,8 @@ class ManutencaoLabsModel extends Connection {
         return($computadores);
     }
 
-    public function deleteLab($nomeLaboratorio) {
+    public function deleteLab($nomeLaboratorio)
+    {
         $conn = $this->connect();
 
         try {
@@ -41,7 +44,8 @@ class ManutencaoLabsModel extends Connection {
         }
     }
 
-    public function createLab($nomeLaboratorio) {
+    public function createLab($nomeLaboratorio)
+    {
         $conn = $this->connect();
     
         try {
@@ -64,7 +68,8 @@ class ManutencaoLabsModel extends Connection {
         }
     }
 
-    public function createPc($patrimonio, $nomeLaboratorio) {
+    public function createPc($patrimonio, $nomeLaboratorio)
+    {
         $conn = $this->connect();
     
         try {
@@ -88,7 +93,8 @@ class ManutencaoLabsModel extends Connection {
         }
     }
 
-    public function deletePc($patrimonio, $nomeLaboratorio) {
+    public function deletePc($patrimonio, $nomeLaboratorio)
+    {
         $conn = $this->connect();
     
         try {
@@ -97,7 +103,7 @@ class ManutencaoLabsModel extends Connection {
                 throw new \Exception('Houve um erro na preparação da consulta SQL');
             }
     
-            $stmt->bindParam(':patrimonio', $patrimonio);    
+            $stmt->bindParam(':patrimonio', $patrimonio);
             $stmt->execute();
     
             return true;
@@ -110,7 +116,8 @@ class ManutencaoLabsModel extends Connection {
         }
     }
 
-    public function createComp($componente) {
+    public function createComp($componente)
+    {
         $conn = $this->connect();
     
         try {
@@ -119,7 +126,7 @@ class ManutencaoLabsModel extends Connection {
                 throw new \Exception('Houve um erro na preparação da consulta SQL');
             }
     
-            $stmt->bindParam(':componente', $componente);    
+            $stmt->bindParam(':componente', $componente);
             $stmt->execute();
     
             return true;
@@ -132,7 +139,8 @@ class ManutencaoLabsModel extends Connection {
         }
     }
 
-    public function deleteComp($componente) {
+    public function deleteComp($componente)
+    {
         $conn = $this->connect();
     
         try {
@@ -141,7 +149,7 @@ class ManutencaoLabsModel extends Connection {
                 throw new \Exception('Houve um erro na preparação da consulta SQL');
             }
     
-            $stmt->bindParam(':componente', $componente);    
+            $stmt->bindParam(':componente', $componente);
             $stmt->execute();
     
             return true;
@@ -153,6 +161,4 @@ class ManutencaoLabsModel extends Connection {
             return false;
         }
     }
-    
 }
-    

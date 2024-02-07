@@ -1,0 +1,28 @@
+
+FILE: C:\wamp64\www\ManutencaoLabs-MVC\app\libraries\MYPDF.php
+--------------------------------------------------------------------------------
+FOUND 7 ERRORS AND 3 WARNINGS AFFECTING 7 LINES
+--------------------------------------------------------------------------------
+  1 | WARNING | [ ] A file should declare new symbols (classes, functions,
+    |         |     constants, etc.) and cause no other side effects, or it
+    |         |     should execute logic with side effects, but should not do
+    |         |     both. The first symbol is defined on line 7 and the first
+    |         |     side effect is on line 3.
+  1 | ERROR   | [x] End of line character is invalid; expected "\n" but found
+    |         |     "\r\n"
+  7 | ERROR   | [ ] Each class must be in a namespace of at least one level (a
+    |         |     top-level vendor name)
+  7 | ERROR   | [x] Opening brace of a class must be on the line after the
+    |         |     definition
+ 22 | ERROR   | [ ] Method name "MYPDF::ColoredTable" is not in camel caps
+    |         |     format
+ 22 | ERROR   | [x] Opening brace should be on a new line
+ 33 | ERROR   | [x] Expected 1 space after FOR keyword; 0 found
+ 45 | ERROR   | [x] Expected 1 space after FOREACH keyword; 0 found
+ 48 | WARNING | [ ] Line exceeds 120 characters; contains 155 characters
+ 49 | WARNING | [ ] Line exceeds 120 characters; contains 155 characters
+--------------------------------------------------------------------------------
+PHPCBF CAN FIX THE 5 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+--------------------------------------------------------------------------------
+
+

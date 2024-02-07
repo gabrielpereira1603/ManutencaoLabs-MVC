@@ -4,7 +4,8 @@ namespace app\models;
 
 class ManutencaoModel extends Connection
 {
-    public function finalizarManutencao($codLaboratorio, $codComputador, $nomeUsuario, $codUsuario, $codReclamacao, $descricaoManutencao) {
+    public function finalizarManutencao($codLaboratorio, $codComputador, $nomeUsuario, $codUsuario, $codReclamacao, $descricaoManutencao)
+    {
         $conn = $this->connect();
 
         if (isset($descricaoManutencao)) {
@@ -26,12 +27,9 @@ class ManutencaoModel extends Connection
             $stmt_update_situacao->bindParam(':codComputador', $codComputador);
             $stmt_update_situacao->bindParam(':novaSituacao', $novaSituacao);
             $stmt_update_situacao->execute();
-            return true; 
+            return true;
         } else {
             $_SESSION['error_message'] = 'Preencha a descrição da Manutenção.';
         }
     }
-
 }
-
-

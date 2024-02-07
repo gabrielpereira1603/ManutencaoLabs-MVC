@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<ruleset name="MyStandard">
+    <!-- Define os padrões de codificação -->
+    <rule ref="PSR2"/>
+
+    <!-- Define os diretórios que devem ser verificados -->
+    <file>./app/models</file>
+
+    <!-- Exclui diretórios ou arquivos específicos da verificação -->
+    <exclude-pattern>./vendor/*</exclude-pattern>
+
+    <!-- Define o relatório a ser gerado -->
+    <arg name="report" value="full"/>
+
+    <!-- Define o formato do relatório -->
+    <arg name="report-full" value="C:\wamp64\www\ManutencaoLabs-MVC\report\logs.txt"/>
+</ruleset>

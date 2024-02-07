@@ -1,11 +1,13 @@
 <?php
 
 namespace app\controllers;
+
 use app\models\ManutencaoLabsModel;
 
 class ManutencaoLabsController extends ManutencaoLabsModel
 {
-    public function getComputadores() {
+    public function getComputadores()
+    {
         if (isset($_GET['codLaboratorio'])) {
             $codLaboratorio = $_GET['codLaboratorio'];
 
@@ -14,10 +16,11 @@ class ManutencaoLabsController extends ManutencaoLabsModel
     
             header('Content-Type: application/json');
             echo  json_encode($computadores);
-        }  
+        }
     }
 
-    public function alterLabs() {
+    public function alterLabs()
+    {
         session_start();
         $acao = isset($_POST['acao']) ? $_POST['acao'] : '';
         $nomeLaboratorio = isset($_POST['nomeLaboratorio']) ? $_POST['nomeLaboratorio'] : '';
@@ -29,12 +32,10 @@ class ManutencaoLabsController extends ManutencaoLabsModel
             if ($delete) {
                 $_SESSION['success_message'] = 'Laboratório excluido com sucesso';
                 header("Location: ?router=Site/manutencaoLabs");
-
             } else {
                 $_SESSION['error_message'] = 'Houve um erro ao excluir o Laboratório';
                 header("Location: ?router=Site/manutencaoLabs");
             }
-            
         } elseif ($acao == 'criar') {
             $adicionar = $manutencaoLabsModel->createLab($nomeLaboratorio);
             if ($adicionar) {
@@ -44,12 +45,11 @@ class ManutencaoLabsController extends ManutencaoLabsModel
                 $_SESSION['error_message'] = 'Houve um erro ao criar o Laboratório';
                 header("Location: ?router=Site/manutencaoLabs");
             }
-            
         }
-        
     }
 
-    public function alterPc() {
+    public function alterPc()
+    {
         session_start();
         $acao = isset($_POST['acao']) ? $_POST['acao'] : '';
         $nomeLaboratorio = $_POST['laboratorio'];
@@ -61,12 +61,10 @@ class ManutencaoLabsController extends ManutencaoLabsModel
             if ($delete) {
                 $_SESSION['success_message'] = 'Computador excluido com sucesso';
                 header("Location: ?router=Site/manutencaoLabs");
-
             } else {
                 $_SESSION['error_message'] = 'Houve um erro ao excluir o Computador';
                 header("Location: ?router=Site/manutencaoLabs");
             }
-            
         } elseif ($acao == 'criar') {
             $adicionar = $manutencaoLabsModel->createPc($patrimonio, $nomeLaboratorio);
             if ($adicionar) {
@@ -76,11 +74,11 @@ class ManutencaoLabsController extends ManutencaoLabsModel
                 $_SESSION['error_message'] = 'Houve um erro ao criar o Computador';
                 header("Location: ?router=Site/manutencaoLabs");
             }
-            
         }
     }
 
-    public function alterComp() {
+    public function alterComp()
+    {
         session_start();
         $acao = isset($_POST['acao']) ? $_POST['acao'] : '';
         $componente = $_POST['nome-componente'];
@@ -91,12 +89,10 @@ class ManutencaoLabsController extends ManutencaoLabsModel
             if ($delete) {
                 $_SESSION['success_message'] = 'Componente excluido com sucesso';
                 header("Location: ?router=Site/manutencaoLabs");
-
             } else {
                 $_SESSION['error_message'] = 'Houve um erro ao excluir o Componente';
                 header("Location: ?router=Site/manutencaoLabs");
             }
-            
         } elseif ($acao == 'criar') {
             $adicionar = $manutencaoLabsModel->createComp($componente);
             if ($adicionar) {
@@ -106,8 +102,6 @@ class ManutencaoLabsController extends ManutencaoLabsModel
                 $_SESSION['error_message'] = 'Houve um erro ao criar o Componente';
                 header("Location: ?router=Site/manutencaoLabs");
             }
-            
         }
     }
-    
 }

@@ -4,7 +4,8 @@ namespace app\models;
 
 class RelatorioModel extends Connection
 {
-    public function getComputadores($codLaboratorio) {
+    public function getComputadores($codLaboratorio)
+    {
         $conn = $this->connect();
 
         // Realize a consulta SQL para buscar os dados
@@ -18,7 +19,8 @@ class RelatorioModel extends Connection
         return($computadores);
     }
 
-    public function todosPc() {
+    public function todosPc()
+    {
         $conn = $this->connect();
 
         $sql = "SELECT * FROM computador";
@@ -29,7 +31,8 @@ class RelatorioModel extends Connection
         return($computadores);
     }
 
-    public function Manutencao($usuarioadmin, $codLaboratorio, $codComputador, $dataInicio, $dataFim) {
+    public function Manutencao($usuarioadmin, $codLaboratorio, $codComputador, $dataInicio, $dataFim)
+    {
         $conn = $this->connect();
 
         if ($codLaboratorio == -1 && $codComputador == -1 && $usuarioadmin == -1) {
@@ -57,7 +60,7 @@ class RelatorioModel extends Connection
                 (manutencao.datahora_manutencao BETWEEN '$dataInicio' AND '$dataFim')
             GROUP BY
                 manutencao.codmanutencao";
-        } else if ($codLaboratorio == -1 && $codComputador == -1) {
+        } elseif ($codLaboratorio == -1 && $codComputador == -1) {
             $sql = "SELECT
                 manutencao.datahora_manutencao,
                 manutencao.descricao_manutencao,
@@ -83,7 +86,7 @@ class RelatorioModel extends Connection
                 AND manutencao.codusuario_fk = $usuarioadmin
             GROUP BY
                 manutencao.codmanutencao";
-        } else if ($codComputador == -2) {
+        } elseif ($codComputador == -2) {
             $sql = "SELECT
                 manutencao.datahora_manutencao,
                 manutencao.descricao_manutencao,
@@ -147,7 +150,8 @@ class RelatorioModel extends Connection
         return $resultado;
     }
     
-    public function Componente($componentes, $codLaboratorio, $dataInicio, $dataFim) {
+    public function Componente($componentes, $codLaboratorio, $dataInicio, $dataFim)
+    {
         $conn = $this->connect();
     
         $sql = "SELECT 
@@ -195,6 +199,4 @@ class RelatorioModel extends Connection
     
         return $resultados;
     }
-    
-    
 }

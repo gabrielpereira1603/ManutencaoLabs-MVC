@@ -1,6 +1,7 @@
 <?php
 
 namespace app\models;
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -94,11 +95,11 @@ class UsuarioModel extends Connection
         $mail = new PHPMailer;
 
         $mail->isSMTP();
-        $mail->Host       = 'smtp.gmail.com';  
-        $mail->SMTPAuth   = true;                                  
+        $mail->Host       = 'smtp.gmail.com';
+        $mail->SMTPAuth   = true;
         $mail->Username   = 'gabrielpereira16032002@gmail.com';  // Seu e-mail do Gmail
         $mail->Password   = 'muvqlnslnpoadruk'; // Sua senha de aplicativo gerada
-        $mail->SMTPSecure = 'tls';         
+        $mail->SMTPSecure = 'tls';
         $mail->Port       = 587;
     
         $mail->setFrom('gabrielpereira16032002@gmail.com', 'Sistema de Troca de Senha'); // Seu e-mail e nome
@@ -179,11 +180,11 @@ class UsuarioModel extends Connection
         // $mail = new PHPMailer;
 
         // $mail->isSMTP();
-        // $mail->Host       = 'smtp.gmail.com';  
-        // $mail->SMTPAuth   = true;                                  
+        // $mail->Host       = 'smtp.gmail.com';
+        // $mail->SMTPAuth   = true;
         // $mail->Username   = 'gabrielpereira16032002@gmail.com';  // Seu e-mail do Gmail
         // $mail->Password   = 'muvqlnslnpoadruk'; // Sua senha de aplicativo gerada
-        // $mail->SMTPSecure = 'tls';         
+        // $mail->SMTPSecure = 'tls';
         // $mail->Port       = 587;
     
         // $mail->setFrom('gabrielpereira16032002@gmail.com', 'Sistema de Manutenção Unifunec'); // Seu e-mail e nome
@@ -235,7 +236,7 @@ class UsuarioModel extends Connection
         //         </div>
         //     </body>
         // </html>';
-        // $mail->AltBody = 'Bem-vindo ao Sistema de Solicitação de Troca de Senha Unifunec' . PHP_EOL . 
+        // $mail->AltBody = 'Bem-vindo ao Sistema de Solicitação de Troca de Senha Unifunec' . PHP_EOL .
         //     'Seu login é: ' . $login . PHP_EOL .
         //     'Olá, seja bem-vindo ao nosso sistema. Agradecemos por se juntar a nós. Estamos felizes em tê-lo como nosso usuário.' . PHP_EOL .
         //     'Se você tiver alguma dúvida ou precisar de assistência, não hesite em entrar em contato conosco.' . PHP_EOL .
@@ -250,7 +251,8 @@ class UsuarioModel extends Connection
         // return true;
     }
 
-    public function asyncUser($codUsuario) {
+    public function asyncUser($codUsuario)
+    {
         $conn = $this->connect();
 
         $sql = "SELECT login FROM usuario WHERE codusuario = :codUsuario";
@@ -276,9 +278,8 @@ class UsuarioModel extends Connection
         return true;
     }
 
-    public function alterarUsuario($nome_user, $email_user, $login_user) {
+    public function alterarUsuario($nome_user, $email_user, $login_user)
+    {
         $conn = $this->connect();
-
     }
 }
-    

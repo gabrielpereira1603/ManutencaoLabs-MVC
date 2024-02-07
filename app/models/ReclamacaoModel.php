@@ -4,7 +4,8 @@ namespace app\models;
 
 class ReclamacaoModel extends Connection
 {
-    public function inserirReclamacao($codComputador, $patrimonio, $codLaboratorio, $reclamacao, $componentesSelecionados) {
+    public function inserirReclamacao($codComputador, $patrimonio, $codLaboratorio, $reclamacao, $componentesSelecionados)
+    {
         $conn = $this->connect();
     
         $nomeAluno = $_SESSION['nomeadmin'];
@@ -18,7 +19,7 @@ class ReclamacaoModel extends Connection
         $row = $stmt->fetch(\PDO::FETCH_ASSOC);
     
         if (!$row) {
-            return false; 
+            return false;
         }
     
         $sql = "INSERT INTO reclamacao (descricao, status, datahora_reclamacao, codcomputador_fk, codlaboratorio_fk, codusuario_fk) VALUES (:reclamacao, 'aberta', NOW(), :codComputador, :codLaboratorio, :codUsuario)";
@@ -44,10 +45,11 @@ class ReclamacaoModel extends Connection
             $stmt->execute();
         }
     
-        return true; 
+        return true;
     }
     
-    public function buscarReclamacao($codreclamacao, $numeroLaboratorio, $patrimonio) {
+    public function buscarReclamacao($codreclamacao, $numeroLaboratorio, $patrimonio)
+    {
         $conn = $this->connect();
     
         $sql = "SELECT 
@@ -79,7 +81,8 @@ class ReclamacaoModel extends Connection
         return $result;
     }
 
-    public function deleteReclamacao($codcomputador, $codreclamacao, $descricao, $componentesString) {
+    public function deleteReclamacao($codcomputador, $codreclamacao, $descricao, $componentesString)
+    {
         $conn = $this->connect();
 
         // Lógica para excluir a reclamação e seus componentes associados
@@ -101,7 +104,8 @@ class ReclamacaoModel extends Connection
         return true;
     }
 
-    public function editReclamacao($codreclamacao, $descricao, $componentesString) {
+    public function editReclamacao($codreclamacao, $descricao, $componentesString)
+    {
         $conn = $this->connect();
         
         // Lógica para editar a reclamação

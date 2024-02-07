@@ -22,19 +22,15 @@ class Crud extends Connection
         $stmt->execute();
 
         return $stmt;
-
     }
     public function read()
     {
-
     }
     public function update()
     {
-
     }
     public function delete()
     {
-
     }
 
     public function buscarLaboratorio()
@@ -103,7 +99,7 @@ class Crud extends Connection
         }
     }
 
-    public function getDetalhesReclamacao($codcomputador, $codLaboratorio) 
+    public function getDetalhesReclamacao($codcomputador, $codLaboratorio)
     {
         $conn = $this->connect();
         $sql = "SELECT
@@ -134,7 +130,7 @@ class Crud extends Connection
         return $reclamacoes;
     }
 
-    public function getUsuarios() 
+    public function getUsuarios()
     {
         $conn = $this->connect();
 
@@ -151,9 +147,10 @@ class Crud extends Connection
         } catch (\Exception $e) {
             die($e->getMessage());
         }
-    }  
+    }
 
-    public function getAllUsers() {
+    public function getAllUsers()
+    {
         $conn = $this->connect();
 
         try {
@@ -171,7 +168,8 @@ class Crud extends Connection
         }
     }
 
-    public function reclamacaoComp() {
+    public function reclamacaoComp()
+    {
         $conn = $this->connect();
         try {
             $stmt = $conn->prepare('SELECT 
@@ -201,7 +199,8 @@ class Crud extends Connection
         }
     }
     
-    public function dahsboardSituacao() {
+    public function dahsboardSituacao()
+    {
         $conn = $this->connect();
         try {
             $stmt = $conn->prepare("SELECT 
@@ -233,7 +232,8 @@ class Crud extends Connection
         }
     }
 
-    public function reclamacaoLab() {
+    public function reclamacaoLab()
+    {
         $conn = $this->connect();
         try {
             $stmt = $conn->prepare("SELECT 
@@ -263,7 +263,8 @@ class Crud extends Connection
         }
     }
 
-    public function manutencaoUser() {
+    public function manutencaoUser()
+    {
         $conn = $this->connect();
         try {
             $stmt = $conn->prepare("SELECT 
@@ -292,7 +293,8 @@ class Crud extends Connection
         }
     }
 
-    public function getUserNotPermisao() {
+    public function getUserNotPermisao()
+    {
         $conn = $this->connect();
 
         try {
@@ -311,7 +313,8 @@ class Crud extends Connection
         }
     }
 
-    public function reclamacaoAluno($codusuario) {
+    public function reclamacaoAluno($codusuario)
+    {
         $conn = $this->connect();
         
         try {
@@ -337,5 +340,4 @@ class Crud extends Connection
             die($e->getMessage());
         }
     }
-    
 }

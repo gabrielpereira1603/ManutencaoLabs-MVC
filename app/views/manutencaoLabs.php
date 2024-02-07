@@ -158,6 +158,7 @@
                 </fieldset>
 
                 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button class="btn btn-primary" type="submit" onclick="setAcao('criar')">Adicionar Multiplos</button>
                     <button class="btn btn-danger" type="submit" onclick="setAcao('excluir')">Excluir Componente</button>
                     <button class="btn btn-primary" type="submit" onclick="setAcao('criar')">Criar Componente</button>
                 </div>
