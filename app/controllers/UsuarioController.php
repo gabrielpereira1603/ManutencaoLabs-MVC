@@ -19,8 +19,8 @@ class UsuarioController
         if ($autenticado) {
             header("Location:?router=Site/menu");
         } else {
-            $_SESSION['error_admin'] = 'Dados inválidos';
-            header("Location:?router=Site/loginAdm");
+            $_SESSION['error_message'] = 'Dados inválidos';
+            header("Location:?router=Site/login");
         }
     }
 
@@ -79,7 +79,7 @@ class UsuarioController
     {
         session_start();
         session_destroy();
-        header("Location: ?router=Site/loginAdm"); // redireciona para a página de login de aluno
+        header("Location: ?router=Site/login"); // redireciona para a página de login de aluno
         exit;
     }
 

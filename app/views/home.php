@@ -24,7 +24,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Área do Aluno</h5>
                     <p class="card-text">Para que ele possa realizar reclamações.</p>
-                    <a href="?router=Site/loginAluno" class="btn btn-primary">Aluno</a>
+                    <a href="?router=Site/login" class="btn btn-primary">Aluno</a>
                 </div>
             </div>
         </div>
@@ -34,7 +34,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Área do Colaborador</h5>
                     <p class="card-text">Para que ele possa verificar e concluir manutenções.</p>
-                    <a href="?router=Site/loginColaborador" class="btn btn-primary">Colaborador</a>
+                    <a href="?router=Site/login" class="btn btn-primary">Colaborador</a>
                 </div>
             </div>
         </div>
@@ -44,7 +44,7 @@
                 <div class="card-body">
                     <h5 class="card-title">Área do Administrador</h5>
                     <p class="card-text">Para que ele possa analisar e gerenciar as manutenções.</p>
-                    <a href="?router=Site/loginAdm" class="btn btn-primary">Administrador</a>
+                    <a href="?router=Site/login" class="btn btn-primary">Administrador</a>
                 </div>
             </div>
         </div>

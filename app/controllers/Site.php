@@ -17,29 +17,30 @@ class Site extends Crud
         require_once __DIR__ . '/../views/redefinirSenha.php';
     }
 
-    public function loginAluno() {
-        require_once __DIR__ . '/../views/loginAluno.php';
-    }
+    // public function loginAluno() {
+    //     require_once __DIR__ . '/../views/loginAluno.php';
+    // }
 
-    public function loginColaborador() {
-        require_once __DIR__ . '/../views/loginColaborador.php';
-    }
+    // public function loginColaborador() {
+    //     require_once __DIR__ . '/../views/loginColaborador.php';
+    // }
 
-    public function loginAdm() {
-        require_once __DIR__ . '/../views/loginAdm.php';
+    public function login() {
+        session_start();
+        require_once __DIR__ . '/../views/login.php';
     }
 
     public function menu() {
         session_start();
         if (!isset($_SESSION['autenticado_admin']) || $_SESSION['autenticado_admin'] !== true) {
             $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';            
-            header("Location:?router=Site/loginAdm");
+            header("Location:?router=Site/login");
             exit();
         }
 
         if ($_SESSION['codnivel_acesso'] == 4) {
             $_SESSION['error_admin'] = 'Você não tem permissão para acessar esta página!'; 
-            header("Location:?router=Site/loginAdm");
+            header("Location:?router=Site/login");
             exit();
         }
         $buscarLab = $this->buscarLaboratorio();
@@ -50,7 +51,7 @@ class Site extends Crud
         session_start();
         if (!isset($_SESSION['autenticado_admin']) || $_SESSION['autenticado_admin'] !== true) {
             $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';            
-            header("Location:?router=Site/loginAdm");
+            header("Location:?router=Site/login");
             exit();
         } else if (!isset($_SESSION['codnivel_acesso']) || ($_SESSION['codnivel_acesso'] == 1) || ($_SESSION['codnivel_acesso'] == 4)) {
             $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';           
@@ -66,12 +67,12 @@ class Site extends Crud
         session_start();
         if (!isset($_SESSION['autenticado_admin']) || $_SESSION['autenticado_admin'] !== true) {
             $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';           
-            header("Location:?router=Site/loginAdm");
+            header("Location:?router=Site/login");
             exit();  
         }
         if ($_SESSION['codnivel_acesso'] == 4) {
             $_SESSION['error_admin'] = 'Você não tem permissão para acessar esta página!'; 
-            header("Location:?router=Site/paginaDeErro"); 
+            header("Location:?router=Site/menu"); 
             exit();
         }
 
@@ -90,11 +91,11 @@ class Site extends Crud
         session_start();
         if (!isset($_SESSION['autenticado_admin']) || $_SESSION['autenticado_admin'] !== true) {
             $_SESSION['error_admin'] = 'Você não tem permissão para acessar!';           
-            header("Location:?router=Site/loginAdm");
+            header("Location:?router=Site/login");
             exit();
         } else if (!isset($_SESSION['codnivel_acesso']) || ($_SESSION['codnivel_acesso'] == 1) || ($_SESSION['codnivel_acesso'] == 4)) {
             $_SESSION['error_admin'] = 'Você não tem permissão para acessar!';           
-            header("Location:?router=Site/loginAluno");
+            header("Location:?router=Site/login");
             exit();
         }
     
@@ -108,11 +109,11 @@ class Site extends Crud
         session_start();
         if (!isset($_SESSION['autenticado_admin']) || $_SESSION['autenticado_admin'] !== true) {
             $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';            
-            header("Location:?router=Site/loginAdm");
+            header("Location:?router=Site/login");
             exit();
         } else if (!isset($_SESSION['codnivel_acesso']) || ($_SESSION['codnivel_acesso'] == 1) || ($_SESSION['codnivel_acesso'] == 4) || ($_SESSION['codnivel_acesso'] == 2)) {
             $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';           
-            header("Location:?router=Site/loginAluno");
+            header("Location:?router=Site/login");
             exit();
         }
 
@@ -126,11 +127,11 @@ class Site extends Crud
         session_start();
         if (!isset($_SESSION['autenticado_admin']) || $_SESSION['autenticado_admin'] !== true) {
             $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';            
-            header("Location:?router=Site/loginAdm");
+            header("Location:?router=Site/login");
             exit();
         } else if (!isset($_SESSION['codnivel_acesso']) || ($_SESSION['codnivel_acesso'] == 1) || ($_SESSION['codnivel_acesso'] == 4)) {
             $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';           
-            header("Location:?router=Site/loginAluno");
+            header("Location:?router=Site/login");
             exit();
         }
         require_once __DIR__ . '/../views/resultadoManutencao.php';
@@ -140,11 +141,11 @@ class Site extends Crud
         session_start();
         if (!isset($_SESSION['autenticado_admin']) || $_SESSION['autenticado_admin'] !== true) {
             $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';            
-            header("Location:?router=Site/loginAdm");
+            header("Location:?router=Site/login");
             exit();
         } else if (!isset($_SESSION['codnivel_acesso']) || ($_SESSION['codnivel_acesso'] == 1) || ($_SESSION['codnivel_acesso'] == 4)) {
             $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';           
-            header("Location:?router=Site/loginAluno");
+            header("Location:?router=Site/login");
             exit();
         }
         $dashboard_relatorioComp = $this->reclamacaoComp();
@@ -159,11 +160,11 @@ class Site extends Crud
         session_start();
         if (!isset($_SESSION['autenticado_admin']) || $_SESSION['autenticado_admin'] !== true) {
             $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';            
-            header("Location:?router=Site/loginAdm");
+            header("Location:?router=Site/login");
             exit();
         } else if (!isset($_SESSION['codnivel_acesso']) || ($_SESSION['codnivel_acesso'] == 1) || ($_SESSION['codnivel_acesso'] == 4)) {
             $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';           
-            header("Location:?router=Site/loginAluno");
+            header("Location:?router=Site/login");
             exit();
         }
 
@@ -179,11 +180,11 @@ class Site extends Crud
         $buscarReclamacao = $this->reclamacaoAluno($codusuario);
         if (!isset($_SESSION['autenticado_admin']) || $_SESSION['autenticado_admin'] !== true) {
             $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';            
-            header("Location:?router=Site/loginAdm");
+            header("Location:?router=Site/login");
             exit();
         } else if (!isset($_SESSION['codnivel_acesso']) || ($_SESSION['codnivel_acesso'] == 2) || ($_SESSION['codnivel_acesso'] == 4)) {
             $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';           
-            header("Location:?router=Site/loginAluno");
+            header("Location:?router=Site/login");
             exit();
         }
 
@@ -196,11 +197,11 @@ class Site extends Crud
         
         if (!isset($_SESSION['autenticado_admin']) || $_SESSION['autenticado_admin'] !== true) {
             $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';            
-            header("Location:?router=Site/loginAdm");
+            header("Location:?router=Site/login");
             exit();
         } else if (!isset($_SESSION['codnivel_acesso']) || ($_SESSION['codnivel_acesso'] == 2) || ($_SESSION['codnivel_acesso'] == 4)) {
             $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';           
-            header("Location:?router=Site/loginAluno");
+            header("Location:?router=Site/login");
             exit();
         }
         
@@ -213,11 +214,11 @@ class Site extends Crud
         
         if (!isset($_SESSION['autenticado_admin']) || $_SESSION['autenticado_admin'] !== true) {
             $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';            
-            header("Location:?router=Site/loginAdm");
+            header("Location:?router=Site/login");
             exit();
         } else if (!isset($_SESSION['codnivel_acesso']) || ($_SESSION['codnivel_acesso'] == 2) || ($_SESSION['codnivel_acesso'] == 4)) {
             $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';           
-            header("Location:?router=Site/loginAluno");
+            header("Location:?router=Site/login");
             exit();
         }
 
@@ -232,11 +233,11 @@ class Site extends Crud
         session_start();
         if (!isset($_SESSION['autenticado_admin']) || $_SESSION['autenticado_admin'] !== true) {
             $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';            
-            header("Location:?router=Site/loginAdm");
+            header("Location:?router=Site/login");
             exit();
         } else if (!isset($_SESSION['codnivel_acesso']) || ($_SESSION['codnivel_acesso'] == 1) || ($_SESSION['codnivel_acesso'] == 4)) {
             $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';           
-            header("Location:?router=Site/loginAluno");
+            header("Location:?router=Site/login");
             exit();
         }
         require_once __DIR__ . '/../views/resultadoComponente.php';
@@ -246,11 +247,11 @@ class Site extends Crud
         session_start();
         if (!isset($_SESSION['autenticado_admin']) || $_SESSION['autenticado_admin'] !== true) {
             $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';            
-            header("Location:?router=Site/loginAdm");
+            header("Location:?router=Site/login");
             exit();
         } else if (!isset($_SESSION['codnivel_acesso']) || ($_SESSION['codnivel_acesso'] == 1) || ($_SESSION['codnivel_acesso'] == 4)) {
             $_SESSION['error_admin'] = 'Voçê não tem permissão para acessar!';           
-            header("Location:?router=Site/loginAluno");
+            header("Location:?router=Site/login");
             exit();
         }
         

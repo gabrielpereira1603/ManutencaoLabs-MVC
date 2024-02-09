@@ -11,12 +11,10 @@ class UsuarioModel extends Connection
     public function autenticarAdmin($login, $senha)
     {
         if (empty($login) || empty($senha)) {
-            $_SESSION['error_admin'] = 'Por favor, preencha todos os campos de login e senha.';
+            $_SESSION['error_message'] = 'Por favor, preencha todos os campos de login e senha.';
             return false;
         }
-
         $conn = $this->connect();
-
         try {
             $stmt = $conn->prepare('SELECT 
             usuario.codusuario, 
@@ -43,24 +41,25 @@ class UsuarioModel extends Connection
 
                 if (password_verify($senha, $usuario['senha'])) {
                     // Armazene o codnivel_acesso em uma variável de sessão
-                    $_SESSION['autenticado_admin'] = true;
+                    $_SESSION['codusuario'] = $usuario['codusuario'];
                     $_SESSION['login'] = $login;
                     $_SESSION['nomeadmin'] = $usuario['nome_usuario'];
                     $_SESSION['email_usuario'] = $usuario['email_usuario'];
-                    $_SESSION['codusuario'] = $usuario['codusuario'];
                     $_SESSION['codnivel_acesso'] = $usuario['nivel_acesso_fk'];
                     $_SESSION['tipo_acesso'] = $usuario['tipo_acesso'];
+                    $_SESSION['autenticado_admin'] = true;
                     return true;
                 }
             }
 
-            $_SESSION['error_admin'] = 'Login ou senha incorretos.';
+            $_SESSION['error_message'] = 'Login ou senha incorretos.';
             return false;
         } catch (\PDOException $e) {
             die("Erro de conexão: " . $e->getMessage());
         } catch (\Exception $e) {
             die($e->getMessage());
         }
+
         return false;
     }
 

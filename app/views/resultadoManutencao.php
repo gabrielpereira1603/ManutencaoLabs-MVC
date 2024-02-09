@@ -14,6 +14,7 @@
         <script src="config/node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
         <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.js">
         </script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     </head>
 
     <body>
@@ -69,7 +70,7 @@
                         <input type="hidden" name="dados_manutencao" value="<?php echo htmlspecialchars(json_encode($dados)); ?>">
 
                         <div class="d-grid gap-2 mt-4">
-                            <button id="gerarPDF" class="btn btn-primary" type="submit">Gerar Relatório em PDF</button>
+                            <button class="btn btn-primary" type="button" onclick="gerarPDF()">Gerar Relatório em PDF</button>
                         </div>
                     </form>
                     <?php
@@ -80,10 +81,21 @@
             }
         }
         ?>
+        
         <script>
             $(document).ready(function () {
                 $("#tabela-manutencao").DataTable();
             });
+        </script>
+
+        <script>
+            import { jsPDF } from "jspdf";
+            function gerarPDF() {
+                const doc = new jsPDF();
+
+                doc.text("Hello world!", 10, 10);
+                doc.save("a4.pdf");
+            }
         </script>
 
         <script src="config/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

@@ -3,7 +3,7 @@
         'name' => 'pereira/projeto-tcc',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'b9bb5543ea211184f27c7bac90bd0eec56ea1486',
+        'reference' => 'faf5c46e7dc05acc7fa7ef38dc397ef6ea65051f',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -94,7 +94,7 @@
         'pereira/projeto-tcc' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'b9bb5543ea211184f27c7bac90bd0eec56ea1486',
+            'reference' => 'faf5c46e7dc05acc7fa7ef38dc397ef6ea65051f',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),

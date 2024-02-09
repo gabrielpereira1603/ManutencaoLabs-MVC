@@ -10,6 +10,7 @@ class ManutencaoLabsController extends ManutencaoLabsModel
     {
         if (isset($_GET['codLaboratorio'])) {
             $codLaboratorio = $_GET['codLaboratorio'];
+            
 
             $manutencaoLabsModel = new ManutencaoLabsModel();
             $computadores = $manutencaoLabsModel->BuscarPc($codLaboratorio);
