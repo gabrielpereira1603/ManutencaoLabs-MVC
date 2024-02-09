@@ -96,11 +96,11 @@
                                         <?php echo $patrimonio; ?>
                                     </div>
                                 <?php elseif ($situacao == 2): ?>
-                                    <div id="select-pc" style="font-size: 20px; font-weight: 700; border: solid 1.5px black; background-color: yellow;">
+                                    <div id="select-pc" style="font-size: 20px; font-weight: 700; border: solid 1.5px black; background-color: red;">
                                         <?php echo $patrimonio; ?>
                                     </div>
                                 <?php elseif ($situacao == 3): ?>
-                                    <div id="select-pc" style="font-size: 20px; font-weight: 700; border: solid 1.5px black; background-color: red;">
+                                    <div id="select-pc" style="font-size: 20px; font-weight: 700; border: solid 1.5px black; background-color: yellow;">
                                         <?php echo $patrimonio; ?>
                                     </div>
                                 <?php endif; ?>
@@ -111,8 +111,6 @@
                                     <input type="hidden" name="nomeadmin" value="<?php echo $_SESSION['nomeadmin'];?>">
                                     <input type="hidden" name="codusuario" value="<?php echo $_SESSION['codusuario'];?>">
                                     <input type="hidden" name="codreclamacao" value="<?php echo $codReclamacao;?>">
-
-     
 
                                     <div class="form-floating" id="descricao-manutencao">
                                         <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px; margin-bottom: 20px;" name="descricao_manutencao" disable></textarea>
@@ -159,11 +157,30 @@
                                             <button type="submit" class="btn btn-primary">Concluir Manutenção</button>
                                         </div>
                                     <?php else: ?>
-                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-3">
                                             <button type="button" class="btn btn-primary" disabled>Concluir Manutenção</button>
                                         </div>
                                     <?php endif; ?>
                                 </form>
+
+                                <form action="?router=ReclamacaoController/alterSituacao" method="POST">
+                                    <input type="hidden" name="codlaboratorio" value="<?php echo $codLaboratorio?>">
+                                    <input type="hidden" name="codcomputador" value="<?php echo $codComputador?>">
+                                    <select class="form-select" aria-label="Default select example" id="situacao" name="situacao">
+                                        <option value="">Alterar a situação do computador</option>
+                                        <?php foreach($buscarSituacao as $situacao): ?>
+                                            <option value="<?php echo $situacao['codsituacao']; ?>">
+                                                <?php echo $situacao['tiposituacao']; ?>
+                                            </option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                        <button type="submit" class="btn btn-primary">Editar Situação</button>
+                                    </div
+                                </form>
+                                
+                               
+                                   
                             </div>
                         </div>
                     <?php endif; ?>

@@ -135,4 +135,31 @@ class ReclamacaoModel extends Connection
 
         return true;
     }
+
+    public function AlterarSituacao($codcomputador, $codlaboratorio, $situacao) 
+    {
+        if (empty($codcomputador) || empty($codlaboratorio) || empty($situacao)) {
+            return "Código do computador, Código do laboratório e Situação são obrigatórios.";
+        }
+
+        try {
+            $conn = $this->connect();
+    
+            $query = "UPDATE computador SET codsituacao_fk = :Situacao WHERE codcomputador = :codcomputador AND codlaboratorio_fk = :codlaboratorio";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(':Situacao', $situacao, \PDO::PARAM_INT);
+            $stmt->bindParam(':codcomputador', $codcomputador, \PDO::PARAM_INT);
+            $stmt->bindParam(':codlaboratorio', $codlaboratorio, \PDO::PARAM_INT);
+            $stmt->execute();
+    
+            if ($stmt->rowCount() > 0) {
+                return "Situação do computador atualizada com sucesso.";
+            } else {
+                return "Não foi possível atualizar a situação do computador.";
+            }
+        } catch (\PDOException $e) {
+            error_log("Erro de PDO: " . $e->getMessage());
+            return "Erro de PDO: " . $e->getMessage();
+        }
+    }
 }

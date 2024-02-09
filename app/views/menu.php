@@ -15,21 +15,9 @@
     <body>
         <?php
             include("cabecario.php");
+            include("app/messages/error_message.php");
+            include("app/messages/success_message.php");
         ?>
-
-        <?php if (isset($_SESSION['error_message'])): ?>
-            <script>
-                showErrorAlert('<?php echo $_SESSION['error_message']; ?>');
-            </script>
-            <?php unset($_SESSION['error_message']); ?>
-        <?php endif; ?>
-
-        <?php if (isset($_SESSION['success_message'])): ?>
-            <script>
-                showSucessoAlert('<?php echo $_SESSION['success_message']; ?>');
-            </script>
-            <?php unset($_SESSION['success_message']); ?>
-        <?php endif; ?>
 
         <div class="titulo">
             <h1>Central de Manutenção</h1>
@@ -74,10 +62,10 @@
                                             $button_class = "btn-success"; // Disponível (verde)
                                             break;
                                         case 2:
-                                            $button_class = "btn-warning"; // Manutenção (amarelo)
+                                            $button_class = "btn-danger"; // Indisponível (vermelho)
                                             break;
                                         case 3:
-                                            $button_class = "btn-danger"; // Indisponível (vermelho)
+                                            $button_class = "btn-warning"; // Manutencao (vermelho)
                                             break;
                                     }
                                     // Exibe o computador com a cor e estilos definidos
@@ -115,7 +103,6 @@
                                         echo '<hr class="fileira-line">';
                                         $contador = 0; // Zera o contador
                                     }
-                                    
                                 }
                                 // Fecha a div da última linha
                                 echo "</div>";

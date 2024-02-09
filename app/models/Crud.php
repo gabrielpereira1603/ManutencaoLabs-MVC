@@ -340,4 +340,25 @@ class Crud extends Connection
             die($e->getMessage());
         }
     }
+
+    public function getSituacao() 
+    {
+        $conn = $this->connect();
+
+        try {
+            $stmt = $conn->prepare("SELECT * FROM situacao;                
+            ");
+            if ($stmt === false) {
+                throw new \Exception('Houve um erro na preparação da consulta SQL');
+            }
+            $stmt->execute();
+            $situacao = $stmt->fetchAll();
+            return $situacao;
+        } catch (\PDOException $e) {
+            die("Erro de conexão: " . $e->getMessage());
+        } catch (\Exception $e) {
+            die($e->getMessage());
+        }
+
+    }
 }

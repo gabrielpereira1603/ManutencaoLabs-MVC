@@ -82,6 +82,7 @@ class Site extends Crud
         $codComputador = $_POST['codcomputador'];
         $numeroLaboratorio = $_POST['numerolaboratorio'];
         
+        $buscarSituacao = $this->getSituacao();
         $buscarComponentes = $this->getComponentes();
         $detalhesReclmacoes = $this->getDetalhesReclamacao($codComputador, $codLaboratorio);
         require_once __DIR__ . '/../views/EnviarReclamacao.php';

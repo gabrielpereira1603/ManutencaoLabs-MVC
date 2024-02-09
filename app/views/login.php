@@ -57,20 +57,7 @@
 
                                         <div class="novo-user" style='display: flex; justify-content: center; gap: 50px;'>
                                             <p><a href="#" onclick="showSweetAlert()" style='color: #FE8A00;'><i class="bi bi-info-circle-fill"></i> Problema com a senha?</a></p>
-
-                                            <p><a href="#" id="esqueceu-senha-button" style='color: #FE8A00;'><i class="bi bi-envelope-at"></i> Esqueceu a senha?</a></p>
-                                        </div>
-                                        <!-- Register buttons -->
-                                        <div class="text-center">
-                                           
-
-                                            <button type="button" class="btn btn-link btn-floating mx-1">
-                                                <i class="fab fa-twitter"></i>
-                                            </button>
-
-                                            <button type="button" class="btn btn-link btn-floating mx-1">
-                                                <i class="fab fa-github"></i>
-                                            </button>
+                                            <p><a href="#" id="esqueceu-senha-button" style='color: #FE8A00;'><i class="bi bi-envelope-arrow-up-fill"></i> Esqueceu a senha?</a></p>
                                         </div>
                                     </form>
                                 </div>
@@ -80,10 +67,10 @@
                 </div>
             </div>
         </section>
-        <script src="config/js/jquery.min.js"></script>
-        <script src="config/js/popper.js"></script>
-        <script src="config/js/bootstrap.min.js"></script>
-        <script src="config/js/main.js"></script>
+        <script src="config/js/bootstrap/jquery.min.js"></script>
+        <script src="config/js/bootstrap/popper.js"></script>
+        <script src="config/js/bootstrap/bootstrap.min.js"></script>
+        <script src="config/js/bootstrap/main.js"></script>
         <script src="config/js/login/redefinirSenha.js"></script>
         <script src="config/js/login/problemaSenha.js"></script>
     </body>

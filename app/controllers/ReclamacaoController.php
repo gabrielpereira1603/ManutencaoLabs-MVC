@@ -84,4 +84,21 @@ class ReclamacaoController extends ReclamacaoModel
         }
     }
 
+    public function alterSituacao ()
+    {
+        session_start();
+        $codcomputador = isset($_POST['codcomputador']) ? $_POST['codcomputador'] : '';
+        $codlaboratorio = isset($_POST['codlaboratorio']) ? $_POST['codlaboratorio'] : '';
+        $situacao = isset($_POST['situacao']) ? $_POST['situacao'] : '';
+
+        $reclamacaoModel = new ReclamacaoModel();
+        $alterar = $reclamacaoModel->AlterarSituacao($codcomputador, $codlaboratorio, $situacao);
+
+        if ($alterar) {
+            $_SESSION['success_message'] = 'Situação alterada com sucesso';
+        } else {
+            $_SESSION['error_message'] = 'Houve um erro ao alterar a situação';
+        }        
+        header("Location: ?router=Site/menu");
+    }
 }
