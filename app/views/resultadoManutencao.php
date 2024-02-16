@@ -79,6 +79,8 @@
                 </div>
                 <?php
             }
+        }else{
+            echo'Nenhum resultado encontrado!';
         }
         ?>
         

@@ -19,7 +19,6 @@
             $nome = $_SESSION['nomeadmin'];
             $email = $_SESSION['email_usuario'];
             $acesso = $_SESSION['tipo_acesso'];
-            var_dump($_SESSION);
         ?>
 
         <?php if (isset($_SESSION['error_message'])): ?>
@@ -44,17 +43,22 @@
             <div class="novo-user">
 
                 <div class="title-user">
-                    <legend>Criar Novo Usuário:</legend>
+                    <legend>Prencha as informações que deseja alterar:</legend>
                 </div>  
 
                 <div class="form-floating mb-3">
-                    <input type="text" class="form-control" id="nome" name="nome" placeholder="Selecionar nome do Usuário">
+                    <input type="text" class="form-control" id="nome" name="nome" placeholder="João">
                     <label for="nome">Nome:</label>
                 </div>
 
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Selecionar email do Usuário">
-                    <label for="email">Email:</label>
+                    <input type="number" class="form-control" id="login" name="login" placeholder="102030">
+                    <label for="login">Login:</label>
+                </div>
+
+                <div class="form-floating mb-3">
+                    <input type="senha" class="form-control" id="senha" name="senha" placeholder="**********">
+                    <label for="password">Senha:</label>
                 </div>
                 
                 <!-- <div class="form-floating mb-3">
@@ -67,10 +71,6 @@
                     <label for="nivel_acesso">Nível de Acesso:</label>
                 </div> -->
 
-                <div class="form-floating mb-3">
-                    <input type="number" class="form-control" id="login" name="login" placeholder="Selecionar login do Usuario">
-                    <label for="login">Login:</label>
-                </div>
             
                 <div class="d-grid gap-2">
                     <button class="btn btn-primary" type="submit" name="criaruser">Registar Usuário</button>

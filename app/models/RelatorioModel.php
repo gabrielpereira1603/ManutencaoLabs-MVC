@@ -179,7 +179,7 @@ class RelatorioModel extends Connection
             $sql .= " AND r.codlaboratorio_fk = :codLaboratorio";
         }
     
-        $sql .= "GROUP BY 
+        $sql .= " GROUP BY 
         r.codreclamacao, 
         u.nome_usuario, 
         u.login, 
